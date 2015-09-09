@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -86,16 +87,67 @@ namespace MyvarCraft.Internals
             return Encoding.UTF8.GetString(data);
         }
 
-        internal  void WriteVarInt(int value)
+        internal  void WriteVarInt(int _value)
         {
-            while ((value & 128) != 0)
+            /*   while ((value & 128) != 0)
+               {
+                   _buffer.Add((byte)(value & 127 | 128));
+                   value = (int)((uint)value) >> 7;
+               }
+               _buffer.Add((byte)value);*/
+            uint value = (uint)_value;
+            while (true)
             {
-                _buffer.Add((byte)(value & 127 | 128));
-                value = (int)((uint)value) >> 7;
+                if ((value & 0xFFFFFF80u) == 0)
+                {
+                    WriteByte((byte)value);
+                    break;
+                }
+                WriteByte((byte)(value & 0x7F | 0x80));
+                value >>= 7;
             }
-            _buffer.Add((byte)value);
+
         }
 
+        public static byte[] ToByteArray(BitArray bits)
+        {
+            int numBytes = bits.Count / 8;
+            if (bits.Count % 8 != 0) numBytes++;
+
+            byte[] bytes = new byte[numBytes];
+            int byteIndex = 0, bitIndex = 0;
+
+            for (int i = 0; i < bits.Count; i++)
+            {
+                if (bits[i])
+                    bytes[byteIndex] |= (byte)(1 << (7 - bitIndex));
+
+                bitIndex++;
+                if (bitIndex == 8)
+                {
+                    bitIndex = 0;
+                    byteIndex++;
+                }
+            }
+
+            return bytes;
+        }
+
+        public static BitArray BitsReverse(BitArray bits)
+        {
+            int len = bits.Count;
+            BitArray a = new BitArray(bits);
+            BitArray b = new BitArray(bits);
+
+            for (int i = 0, j = len - 1; i < len; ++i, --j)
+            {
+                a[i] = a[i] ^ b[j];
+                b[j] = a[i] ^ b[j];
+                a[i] = a[i] ^ b[j];
+            }
+
+            return a;
+        }
         internal void WriteShort(short value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));

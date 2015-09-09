@@ -8,9 +8,9 @@ namespace MyvarCraft.Internals.Packets
 {
     public class PlayerPositionAndLookPacket : Packet
     {
-        public double X { get; set; } = 0;
-        public double Y { get; set; } = 5;
-        public double Z { get; set; } = 0;
+        public double X { get; set; } = 10;
+        public double Y { get; set; } = 10;
+        public double Z { get; set; } = 10;
         public float Yaw { get; set; } = 0;
         public float Pitch { get; set; } = 0;
 

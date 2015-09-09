@@ -17,7 +17,7 @@ namespace MyvarCraft.Internals.Packets
             IlegalState = 2;
         }
 
-        
+
 
         public override byte[] Build()
         {
@@ -35,6 +35,16 @@ namespace MyvarCraft.Internals.Packets
                 }
             }
 
+            for (int x = 0; x < 16; x++)
+            {
+                for (int y = 0; y < 16; x++)
+                {
+                    for (int z = 0; z < 256; x++)
+                    {
+
+                    }
+                }
+            }
             return read.Flush(ID);
         }
 

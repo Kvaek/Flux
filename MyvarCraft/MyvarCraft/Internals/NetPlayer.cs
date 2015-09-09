@@ -234,8 +234,8 @@ namespace MyvarCraft.Internals
                 }
                 if (LoginStage == 5)
                 {
-                    MapChunkBulkPacket ncbp = new MapChunkBulkPacket();
-                    WritePacket(ncbp);
+                    ChunkDataPacket cdp = new ChunkDataPacket();
+                    WritePacket(cdp);
                     LoginStage = 6;
                     Thread.Sleep(1000000);
                 }

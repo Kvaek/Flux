@@ -8,9 +8,9 @@ namespace MyvarCraft.Internals.Packets
 {
     public class SpawnPositionPacket : Packet
     {
-        public int X { get; set; } = 0;       
-        public int Y { get; set; } = 5;
-        public int Z { get; set; } = 0;
+        public int X { get; set; } = 10;       
+        public int Y { get; set; } = 10;
+        public int Z { get; set; } = 10;
 
         public SpawnPositionPacket()
         {
