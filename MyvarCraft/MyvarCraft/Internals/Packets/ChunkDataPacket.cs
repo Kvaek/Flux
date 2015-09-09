@@ -40,7 +40,7 @@ namespace MyvarCraft.Internals.Packets
                     {
                         //read.WriteByte(1);//stone block
                         //read.WriteByte(0);
-                        if (y < 4)
+                        if (y < 2)
                         {
                             read.WriteUShort((ushort)((1 << 4) | 0));//stone
                         }

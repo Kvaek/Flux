@@ -209,6 +209,17 @@ namespace MyvarCraft.Internals
                 }
                 if (LoginStage == 1)
                 {
+                    for (int y = -3; y < 7; y++)
+                    {
+                        for (int x = -3; x < 7; x++)
+                        {
+                            ChunkDataPacket cdp = new ChunkDataPacket();
+                            cdp.ChunkX = x;
+                            cdp.ChunkY = y;
+                            WritePacket(cdp);
+                        }
+                    }
+
                     SpawnPositionPacket spp = new SpawnPositionPacket();
                     WritePacket(spp);
                     LoginStage = 2;
@@ -229,13 +240,12 @@ namespace MyvarCraft.Internals
                 {
                     ClientStatusPacket csp = new ClientStatusPacket();
                     
-                   // WritePacket(csp);
+                    WritePacket(csp);
                     LoginStage = 5;
                 }
                 if (LoginStage == 5)
                 {
-                    ChunkDataPacket cdp = new ChunkDataPacket();
-                    WritePacket(cdp);
+                    
                     LoginStage = 6;
                     Thread.Sleep(1000000);
                 }
