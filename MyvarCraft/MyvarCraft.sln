@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyvarCraft", "MyvarCraft\MyvarCraft.csproj", "{C2E737F8-1E2F-40E5-A8F3-1DD406BB332A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestServer", "TestServer\TestServer.csproj", "{DA7DDB8A-86C1-4F37-B3B9-986BE274D26D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2E737F8-1E2F-40E5-A8F3-1DD406BB332A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2E737F8-1E2F-40E5-A8F3-1DD406BB332A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2E737F8-1E2F-40E5-A8F3-1DD406BB332A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2E737F8-1E2F-40E5-A8F3-1DD406BB332A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7DDB8A-86C1-4F37-B3B9-986BE274D26D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA7DDB8A-86C1-4F37-B3B9-986BE274D26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7DDB8A-86C1-4F37-B3B9-986BE274D26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA7DDB8A-86C1-4F37-B3B9-986BE274D26D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
