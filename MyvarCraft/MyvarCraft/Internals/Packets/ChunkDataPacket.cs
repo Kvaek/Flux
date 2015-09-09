@@ -26,40 +26,39 @@ namespace MyvarCraft.Internals.Packets
         public override byte[] Build()
         {
             StreamHelper read = new StreamHelper();
+            //Chuck Colum Meta
             read.WriteInt(ChunkX);
             read.WriteInt(ChunkY);
             read.WriteByte(GroundUpContinuous);
             read.WriteUShort(PrimaryBitMask);
+            //data size = ((16 * 256 * 16) * 3) + 256 
             int si = ((Size * 3) + 256);
-            read.WriteVarInt(si);           
+            read.WriteVarInt(si);
+
             for (int y = 0; y < 256; y++)
             {
                 for (int z = 0; z < 16; z++)
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        //read.WriteByte(1);//stone block
-                        //read.WriteByte(0);
-                        if (y < 2)
+
+                        if (y < 2)//Flat land gen
                         {
                             read.WriteUShort((ushort)((1 << 4) | 0));//stone
                         }
                         else
                         {
-                           read.WriteByte(0);//air block
-                           read.WriteByte(0);}
-
+                            read.WriteByte(0);//air block
+                            read.WriteByte(0);
                         }
+
                     }
+                }
             }
-           // read.WriteVarInt(Size);
-            for (int y = 0; y < (Size ); y++)
+            for (int y = 0; y < (Size); y++)
             {
 
-                read.WriteByte(0xff);//sky = 15 
-            
-
-
+                read.WriteByte(0xff);//sky = 15, block light = 15      
             }
 
             for (int y = 0; y < 256; y++)
