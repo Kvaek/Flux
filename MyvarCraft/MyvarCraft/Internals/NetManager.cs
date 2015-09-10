@@ -16,11 +16,11 @@ namespace MyvarCraft.Internals
         };
 
 
-        public List<NetPlayer> Player = new List<NetPlayer>();
+        public List<NetPlayer> Players = new List<NetPlayer>();
 
         public void AddNetPlayer(NetPlayer p)
         {
-            Player.Add(p);
+            Players.Add(p);
         }
 
         public void Start()
@@ -29,14 +29,21 @@ namespace MyvarCraft.Internals
             {
                 try
                 {
-
-                    foreach (var i in Player.ToArray())
+                 
+                    foreach (var i in Players.ToArray())//to array so that i can delete players
                     {
                         if (!i.Terminate)
                         {
                             i.Update();
                         }
+                        else
+                        {
+                            Players.Remove(i);
+                        }
                     }
+
+                   
+                   
                 }
                 catch(Exception ee)
                 {

@@ -22,7 +22,7 @@ namespace MyvarCraft.Internals.Packets
         public override byte[] Build()
         {
             StreamHelper read = new StreamHelper();
-            read.WriteVarInt(ActionID);           
+            read.WriteInt(ActionID);           
             return read.Flush(ID);
         }
 

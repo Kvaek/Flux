@@ -168,9 +168,27 @@ namespace MyvarCraft.Internals
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal void WriteDouble(double value)
+        internal void WriteSingle(Single value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
+        }
+
+        internal unsafe void WriteDouble(double value)
+        {
+            WriteUInt64(*(ulong*)&value);
+        }
+
+        public void WriteUInt64(ulong value)
+        {
+            _buffer.Add((byte)((value & 0xFF00000000000000) >> 56));
+            _buffer.Add((byte)((value & 0xFF000000000000) >> 48));
+            _buffer.Add((byte)((value & 0xFF0000000000) >> 40));
+            _buffer.Add((byte)((value & 0xFF00000000) >> 32));
+            _buffer.Add((byte)((value & 0xFF000000) >> 24));
+            _buffer.Add((byte)((value & 0xFF0000) >> 16));
+            _buffer.Add((byte)((value & 0xFF00) >> 8));
+            _buffer.Add((byte)(value & 0xFF));
+           
         }
 
         internal void WriteInt64(Int64 value)

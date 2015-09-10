@@ -14,7 +14,7 @@ namespace MyvarCraft.Internals.Packets
         public float Yaw { get; set; } = 0;
         public float Pitch { get; set; } = 0;
 
-        public byte Flags { get; set; } = 0;
+        public byte OnGround { get; set; } = 0;
 
 
 
@@ -30,9 +30,9 @@ namespace MyvarCraft.Internals.Packets
             read.WriteDouble(X);
             read.WriteDouble(Y);
             read.WriteDouble(Z);
-            read.WriteFloat(Yaw);
-            read.WriteFloat(Pitch);
-            read.WriteByte(Flags);
+            read.WriteSingle(Yaw);
+            read.WriteSingle(Pitch);
+            read.WriteByte(OnGround);
             return read.Flush(ID);
         }
 

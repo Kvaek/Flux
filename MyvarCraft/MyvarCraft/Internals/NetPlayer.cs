@@ -91,8 +91,7 @@ namespace MyvarCraft.Internals
 
                 if (State == 3)
                 {
-                    JoinGamePacket jgp = new JoinGamePacket();
-                    WritePacket(jgp);
+                    
                 }
                 else if (State == 2)
                 {
@@ -203,6 +202,7 @@ namespace MyvarCraft.Internals
 
                 if (LoginStage == 0)
                 {
+
                     JoinGamePacket jgp = new JoinGamePacket();
                     WritePacket(jgp);
                     LoginStage = 1;
@@ -238,16 +238,14 @@ namespace MyvarCraft.Internals
                 }
                 if (LoginStage == 4)
                 {
-                    ClientStatusPacket csp = new ClientStatusPacket();
-                    
-                    WritePacket(csp);
+                   
                     LoginStage = 5;
                 }
                 if (LoginStage == 5)
                 {
-                    
+                   
                     LoginStage = 6;
-                    Thread.Sleep(1000000);
+              
                 }
 
             }
