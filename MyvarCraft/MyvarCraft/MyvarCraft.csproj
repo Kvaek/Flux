@@ -49,6 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Map\Biome.cs" />
+    <Compile Include="Api\Map\Block.cs" />
+    <Compile Include="Api\Map\Blocks\StoneBlock.cs" />
+    <Compile Include="Api\Map\Chunk.cs" />
+    <Compile Include="Api\Map\ChunkColum.cs" />
+    <Compile Include="Api\Map\Generator\FlatLandGenerator.cs" />
+    <Compile Include="Api\Map\Generator\GenericGenerator.cs" />
+    <Compile Include="Api\Map\World.cs" />
+    <Compile Include="Api\Player.cs" />
     <Compile Include="Internals\Commen\Entity.cs" />
     <Compile Include="Internals\NetManager.cs" />
     <Compile Include="Internals\Packet.cs" />
@@ -64,6 +73,7 @@
     <Compile Include="Internals\Packets\PlayerPositionAndLookPacket.cs" />
     <Compile Include="Internals\Packets\PlayerPositionAndLookServerPacket.cs" />
     <Compile Include="Internals\Packets\PlayerPositionPacet.cs" />
+    <Compile Include="Internals\Packets\SpawnPlayer.cs" />
     <Compile Include="Internals\Packets\SpawnPositionPacket.cs" />
     <Compile Include="Internals\PingList\Payload.cs" />
     <Compile Include="Internals\NetPlayer.cs" />
@@ -74,6 +84,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

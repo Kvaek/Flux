@@ -17,7 +17,7 @@ namespace MyvarCraft.Internals
         };
 
 
-        public List<NetPlayer> Players = new List<NetPlayer>();
+        public static List<NetPlayer> Players = new List<NetPlayer>();
 
         public void AddNetPlayer(NetPlayer p)
         {
@@ -36,10 +36,7 @@ namespace MyvarCraft.Internals
                         if (!i.Terminate)
                         {
                             i.Update();
-                            foreach (var z in Players.ToArray())
-                            {
-                                i.UpdateEntity(z);
-                            }
+      
                         }
                         else
                         {
