@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internals\Commen\Entity.cs" />
     <Compile Include="Internals\NetManager.cs" />
     <Compile Include="Internals\Packet.cs" />
     <Compile Include="Internals\Packets\ChunkDataPacket.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Internals\Packets\PingPacket.cs" />
     <Compile Include="Internals\Packets\PlayerAbilitiesPacket.cs" />
     <Compile Include="Internals\Packets\PlayerPositionAndLookPacket.cs" />
+    <Compile Include="Internals\Packets\PlayerPositionAndLookServerPacket.cs" />
     <Compile Include="Internals\Packets\PlayerPositionPacet.cs" />
     <Compile Include="Internals\Packets\SpawnPositionPacket.cs" />
     <Compile Include="Internals\PingList\Payload.cs" />

@@ -168,10 +168,46 @@ namespace MyvarCraft.Internals
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
+        public ulong ReadUInt64(byte[] b)
+        {
+            return unchecked(
+                   ((ulong)ReadByte(b) << 56) |
+                   ((ulong)ReadByte(b) << 48) |
+                   ((ulong)ReadByte(b) << 40) |
+                   ((ulong)ReadByte(b) << 32) |
+                   ((ulong)ReadByte(b) << 24) |
+                   ((ulong)ReadByte(b) << 16) |
+                   ((ulong)ReadByte(b) << 8) |
+                    (ulong)ReadByte(b));
+        }
+
+        public uint ReadUInt32(byte[] b)
+        {
+            return (uint)(
+                (ReadByte(b) << 24) |
+                (ReadByte(b) << 16) |
+                (ReadByte(b) << 8) |
+                 ReadByte(b));
+        }
+
+        public unsafe float ReadSingle(byte[] b)
+        {
+            uint value = ReadUInt32(b);
+            return *(float*)&value;
+        }
+
+        public unsafe double ReadDouble(byte[] b)
+        {
+            ulong value = ReadUInt64(b);
+            return *(double*)&value;
+        }
+
         internal void WriteSingle(Single value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
+
+
 
         internal unsafe void WriteDouble(double value)
         {

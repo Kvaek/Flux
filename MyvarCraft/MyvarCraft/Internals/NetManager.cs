@@ -12,7 +12,8 @@ namespace MyvarCraft.Internals
         public static List<Packet> PacketIndex = new List<Packet>() {
             new HandShakePacket(),
             new PingPacket(),
-            new LoginStartPacket()
+            new LoginStartPacket(),
+            new PlayerPositionAndLookServerPacket()
         };
 
 
@@ -29,12 +30,16 @@ namespace MyvarCraft.Internals
             {
                 try
                 {
-                 
+
                     foreach (var i in Players.ToArray())//to array so that i can delete players
                     {
                         if (!i.Terminate)
                         {
                             i.Update();
+                            foreach (var z in Players.ToArray())
+                            {
+                                i.UpdateEntity(z);
+                            }
                         }
                         else
                         {
@@ -42,10 +47,10 @@ namespace MyvarCraft.Internals
                         }
                     }
 
-                   
-                   
+
+
                 }
-                catch(Exception ee)
+                catch (Exception ee)
                 {
 
                 }

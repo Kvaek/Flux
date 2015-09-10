@@ -1,4 +1,5 @@
-﻿using MyvarCraft.Internals.Packets;
+﻿using MyvarCraft.Internals.Commen;
+using MyvarCraft.Internals.Packets;
 using MyvarCraft.Internals.PingList;
 using Newtonsoft.Json;
 using System;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace MyvarCraft.Internals
 {
-    public class NetPlayer
+    public class NetPlayer : Entity
     {
         private NetworkStream _stream { get; set; }
         private TcpClient _client { get; set; }
@@ -27,6 +28,7 @@ namespace MyvarCraft.Internals
         //Player
         public string Name { get; set; }
         public bool LoggedIn = false;
+
 
         public NetPlayer(TcpClient cl)
         {
@@ -41,6 +43,11 @@ namespace MyvarCraft.Internals
             {
                 yield return b[i];
             }
+        }
+
+        internal void UpdateEntity(Entity e)
+        {
+           
         }
 
         public Packet GetPacketFromRaw(byte[] ind)
@@ -91,7 +98,16 @@ namespace MyvarCraft.Internals
 
                 if (State == 3)
                 {
-                    
+                    if (x is PlayerPositionAndLookServerPacket)
+                    {
+                        var z = x as PlayerPositionAndLookServerPacket;
+                        X = z.X;
+                        Y = z.Y;
+                        Z = z.Z;
+
+                        Pitch = z.Pitch;
+                        Yaw = z.Yaw;
+                    }
                 }
                 else if (State == 2)
                 {
