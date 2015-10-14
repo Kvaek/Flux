@@ -15,7 +15,7 @@ namespace MyvarCraft.Api
     public class Player
     {
 
-        public TcpClient _tcp { get; set; }
+        public NetworkStream _ns { get; set; }
 
         public int State { get; set; } = 0;
         public string Name { get; set; }
@@ -23,43 +23,44 @@ namespace MyvarCraft.Api
 
         public Player(TcpClient c)
         {
-            _tcp = c;
+            
+            var stream = c.GetStream();
+            _ns = stream;
 
             ThreadPool.QueueUserWorkItem((x) =>
             {
-
                 var tcp = x as TcpClient;
-                var stream = tcp.GetStream();
+                
 
                 while (tcp.Connected)
                 {
-                    if (stream.DataAvailable)
+                    if (_ns.DataAvailable)
                     {
                         try
                         {
                             byte[] buffer = new byte[4096];
-                            int bytesread = stream.Read(buffer, 0, buffer.Length);
+                            int bytesread = _ns.Read(buffer, 0, buffer.Length);
                             Array.Resize(ref buffer, bytesread);
 
-                            HandlePacket(PacketManager.GetPacket(buffer, State), stream);
+                            HandlePacket(PacketManager.GetPacket(buffer, State), _ns);
 
                         }
                         catch
                         {
-                            stream.Close();
-                            stream.Dispose();
+                            _ns.Close();
+                            _ns.Dispose();
                             tcp.Close();
                             Thread.CurrentThread.Abort();
                         }
                     }
                 }
 
-                stream.Close();
-                stream.Dispose();
+                _ns.Close();
+                _ns.Dispose();
                 tcp.Close();
                 Thread.CurrentThread.Abort();
 
-            }, _tcp);
+            }, c);
 
         }
 
@@ -102,8 +103,11 @@ namespace MyvarCraft.Api
                     break;
                 case 2:
 
+                   
+
                     if (c is LoginStart)
                     {
+                        //login
                         var x = c as LoginStart;
                         Name = x.Name;
 
@@ -111,6 +115,21 @@ namespace MyvarCraft.Api
                         ls.Username = Name;
                         ls.UUID = GetUuid(Name);
                         ls.Write(ns);
+
+                        //join game
+                        var jg = new JoinGame();
+                        jg.EntityID = 0;
+                        jg.Gamemode = 0;
+                        jg.Dimension = 0;
+                        jg.Difficulty = 0;
+                        jg.MaxPlayers = 255;
+                        jg.LevelType = "default";
+                        jg.ReducedDebugInfo = 0;
+                        jg.Write(ns);
+
+                        //send terain
+
+
                     }
 
 
@@ -141,7 +160,12 @@ namespace MyvarCraft.Api
 
         public void Update()
         {
-
+            if (_ns.CanWrite)
+            {
+                var ka = new KeepAlive();
+                ka.KeepAliveID = new Random().Next();
+                ka.Write(_ns);
+            }
         }
     }
 }

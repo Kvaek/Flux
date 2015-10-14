@@ -15,6 +15,7 @@ namespace MyvarCraft.Networking.Packets
 
         public LoginSuccess()
         {
+
             ID = 0x02;
         }
 

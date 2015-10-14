@@ -59,6 +59,8 @@
     <Compile Include="Networking\Packet.cs" />
     <Compile Include="Networking\PacketManager.cs" />
     <Compile Include="Networking\Packets\HandShake.cs" />
+    <Compile Include="Networking\Packets\JoinGame.cs" />
+    <Compile Include="Networking\Packets\KeepAlive.cs" />
     <Compile Include="Networking\Packets\LoginStart.cs" />
     <Compile Include="Networking\Packets\LoginSuccess.cs" />
     <Compile Include="Networking\Packets\Ping.cs" />

@@ -15,7 +15,8 @@ namespace MyvarCraft.Networking
             new HandShake(),
             new Request(),
             new Ping(),
-            new LoginStart()
+            new LoginStart(),
+            new KeepAlive()
         };
 
         public static Packet GetPacket(byte[] raw, int state)
