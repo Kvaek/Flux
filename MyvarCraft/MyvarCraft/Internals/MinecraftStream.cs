@@ -8,21 +8,20 @@ using System.Threading.Tasks;
 
 namespace MyvarCraft.Internals
 {
-    internal class StreamHelper
+    public class MinecraftStream
     {
-        #region Read/Write methods
 
         internal List<byte> _buffer = new List<byte>();
         internal int _offset = 0;
 
-        internal  byte ReadByte(byte[] buffer)
+        internal byte ReadByte(byte[] buffer)
         {
             var b = buffer[_offset];
             _offset += 1;
             return b;
         }
 
-        internal  byte[] Read(byte[] buffer, int length)
+        internal byte[] Read(byte[] buffer, int length)
         {
             var data = new byte[length];
             Array.Copy(buffer, _offset, data, 0, length);
@@ -30,7 +29,7 @@ namespace MyvarCraft.Internals
             return data;
         }
 
-        internal  int ReadVarInt(byte[] buffer)
+        internal int ReadVarInt(byte[] buffer)
         {
             var value = 0;
             var size = 0;
@@ -71,7 +70,7 @@ namespace MyvarCraft.Internals
             return BitConverter.ToInt16(b, 0);
         }
 
-       
+
 
         internal ushort ReadUShort(byte[] buffer)
         {
@@ -81,13 +80,13 @@ namespace MyvarCraft.Internals
             return BitConverter.ToUInt16(b, 0);
         }
 
-        internal  string ReadString(byte[] buffer, int length)
+        internal string ReadString(byte[] buffer, int length)
         {
             var data = Read(buffer, length);
             return Encoding.UTF8.GetString(data);
         }
 
-        internal  void WriteVarInt(int _value)
+        internal void WriteVarInt(int _value)
         {
             /*   while ((value & 128) != 0)
                {
@@ -224,7 +223,7 @@ namespace MyvarCraft.Internals
             _buffer.Add((byte)((value & 0xFF0000) >> 16));
             _buffer.Add((byte)((value & 0xFF00) >> 8));
             _buffer.Add((byte)(value & 0xFF));
-           
+
         }
 
         internal void WriteInt64(Int64 value)
@@ -246,7 +245,7 @@ namespace MyvarCraft.Internals
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal  void WriteString(string data)
+        internal void WriteString(string data)
         {
             var buffer = Encoding.UTF8.GetBytes(data);
             WriteVarInt(buffer.Length);
@@ -278,6 +277,6 @@ namespace MyvarCraft.Internals
             System.Buffer.BlockCopy(buffer, 0, rv, bufferLength.Length + packetData.Length, buffer.Length);
             return rv;
         }
-        #endregion
+      
     }
 }

@@ -1,20 +1,17 @@
-﻿using MyvarCraft;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestServer
+namespace MyvarCraft
 {
     class Program
     {
         static void Main(string[] args)
         {
-            MyvarCraftServer mcs = new MyvarCraftServer();
-            mcs.Start();
-
-            while (true) { }
+            var mc = new MyvarCraft();
+            mc.Start();
         }
     }
 }
