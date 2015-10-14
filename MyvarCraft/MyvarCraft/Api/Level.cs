@@ -17,7 +17,7 @@ namespace MyvarCraft.Api
             {
                 while (true)
                 {
-                    try
+                  /*  try
                     {
                         foreach (var i in Players.ToArray())
                         {
@@ -27,7 +27,7 @@ namespace MyvarCraft.Api
                     catch
                     {
 
-                    }
+                    }*/
                 }
             });
         }

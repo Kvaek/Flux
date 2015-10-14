@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -17,7 +18,7 @@ namespace MyvarCraft.Api
         public TcpClient _tcp { get; set; }
 
         public int State { get; set; } = 0;
-
+        public string Name { get; set; }
 
 
         public Player(TcpClient c)
@@ -44,7 +45,12 @@ namespace MyvarCraft.Api
 
                         }
                         catch
-                        { }
+                        {
+                            stream.Close();
+                            stream.Dispose();
+                            tcp.Close();
+                            Thread.CurrentThread.Abort();
+                        }
                     }
                 }
 
@@ -94,6 +100,42 @@ namespace MyvarCraft.Api
                     }
 
                     break;
+                case 2:
+
+                    if (c is LoginStart)
+                    {
+                        var x = c as LoginStart;
+                        Name = x.Name;
+
+                        var ls = new LoginSuccess();
+                        ls.Username = Name;
+                        ls.UUID = GetUuid(Name);
+                        ls.Write(ns);
+                    }
+
+
+                    break;
+            }
+        }
+
+
+        private string GetUuid(string username)
+        {
+            try
+            {
+                var wc = new WebClient();
+                var result = wc.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + username);
+                var _result = result.Split('"');
+                if (_result.Length > 1)
+                {
+                    var uuid = _result[3];
+                    return new Guid(uuid).ToString();
+                }
+                return Guid.NewGuid().ToString();
+            }
+            catch
+            {
+                return Guid.NewGuid().ToString();
             }
         }
 

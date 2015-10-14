@@ -7,21 +7,25 @@ using System.Threading.Tasks;
 
 namespace MyvarCraft.Networking.Packets
 {
-    public class Request : Packet
+    public class LoginStart : Packet
     {
-        public Request()
+        public string Name { get; set; }
+
+        public LoginStart()
         {
             IDs.Add(-1);
-            IDs.Add(0);
             IDs.Add(-1);
+            IDs.Add(0);
         }
 
         public override Packet Parse(byte[] data)
         {
-            var re = new Request();
+            var re = new LoginStart();
             MinecraftStream ms = new MinecraftStream();
             ms.ReadVarInt(data);
             re.ID = ms.ReadVarInt(data);
+            var l = ms.ReadVarInt(data);
+            re.Name = ms.ReadString(data, l);
             return re;
         }
     }
