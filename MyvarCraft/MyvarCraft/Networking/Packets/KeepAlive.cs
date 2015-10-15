@@ -16,9 +16,9 @@ namespace MyvarCraft.Networking.Packets
         {
             IDs.Add(-1);
             IDs.Add(-1);
-            IDs.Add(0);
+            IDs.Add(-1);
 
-            ID = 0;
+            ID = 0x1F;
         }
 
         public override Packet Parse(byte[] data)
@@ -34,7 +34,7 @@ namespace MyvarCraft.Networking.Packets
         public override void Write(NetworkStream ns)
         {
             MinecraftStream read = new MinecraftStream();
-            read.WriteLong(KeepAliveID);
+            read.WriteVarInt(KeepAliveID);
             var buf = read.Flush(ID);
             ns.Write(buf, 0, buf.Length);
         }

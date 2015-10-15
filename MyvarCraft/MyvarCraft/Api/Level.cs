@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyvarCraft.Api.World;
+using MyvarCraft.Api.World.Providers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +13,15 @@ namespace MyvarCraft.Api
     {
         public List<Player> Players { get; set; } = new List<Player>();
 
+        public WorldProvider World { get; set; } = new FlatLand();
+
         public void Start()
         {
             ThreadPool.QueueUserWorkItem((x) =>
             {
                 while (true)
                 {
-                  /*  try
+                    try
                     {
                         foreach (var i in Players.ToArray())
                         {
@@ -27,7 +31,7 @@ namespace MyvarCraft.Api
                     catch
                     {
 
-                    }*/
+                    }
                 }
             });
         }

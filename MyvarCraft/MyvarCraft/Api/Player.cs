@@ -17,9 +17,17 @@ namespace MyvarCraft.Api
 
         public NetworkStream _ns { get; set; }
 
+       
+
         public int State { get; set; } = 0;
         public string Name { get; set; }
 
+        public double X { get; set; } = 0;
+        public double Y { get; set; } = 50;
+        public double Z { get; set; } = 0;
+
+        public float Yaw { get; set; } = 0;
+        public float Pitch { get; set; } = 0;
 
         public Player(TcpClient c)
         {
@@ -127,8 +135,15 @@ namespace MyvarCraft.Api
                         jg.ReducedDebugInfo = 0;
                         jg.Write(ns);
 
-                        //send terain
-
+                        //send player details
+                        var ppal = new PlayerPositionAndLook();
+                        ppal.X = X;
+                        ppal.Y = Y;
+                        ppal.Z = Z;
+                        ppal.Yaw = Yaw;
+                        ppal.Pitch = Pitch;
+                        ppal.Flags = 255;
+                        ppal.Write(ns);
 
                     }
 
@@ -160,11 +175,11 @@ namespace MyvarCraft.Api
 
         public void Update()
         {
-            if (_ns.CanWrite)
+            if (_ns.CanWrite && State == 2)
             {
                 var ka = new KeepAlive();
                 ka.KeepAliveID = new Random().Next();
-                ka.Write(_ns);
+              //  ka.Write(_ns);
             }
         }
     }
