@@ -31,6 +31,7 @@ namespace MyvarCraft.Networking.Packets
             read.WriteFloat(Yaw);
             read.WriteFloat(Pitch);
             read.WriteByte(Flags);
+            read.WriteByte(0);
 
             var buf = read.Flush(ID);
             ns.Write(buf, 0, buf.Length);

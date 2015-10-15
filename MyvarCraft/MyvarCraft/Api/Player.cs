@@ -2,6 +2,7 @@
 using MyvarCraft.Networking.Packets;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,7 +18,7 @@ namespace MyvarCraft.Api
 
         public NetworkStream _ns { get; set; }
 
-       
+        public int LevelID { get; set; } = 0;
 
         public int State { get; set; } = 0;
         public string Name { get; set; }
@@ -145,6 +146,25 @@ namespace MyvarCraft.Api
                         ppal.Flags = 255;
                         ppal.Write(ns);
 
+                        //TODO: player abilitys
+
+                        //send chuncks
+                        var cd = new ChunkData();
+                        cd.X = 0;
+                        cd.Y = 0;
+                        cd.GroundUpContinuous = 0;
+                        cd.PrimaryBitMask = 0XFFFFFF;
+                        List<byte> Data = new List<byte>();
+
+                        for (int i = 0; i < 16; i++)
+                        {
+                           // Data.AddRange(MyvarCraft.Levels[LevelID].World.GetChunk(0, 0).ToPacketFormat());
+
+                        }
+
+                        cd.Size = Data.Count;
+                        cd.Data = Data.ToArray();
+                        cd.Write(ns);
                     }
 
 

@@ -12,7 +12,8 @@ namespace MyvarCraft
     public class MyvarCraft
     {
         public object PlayerLock = new object();
-     
+
+        public static List<Level> Levels = new List<Level>();
 
         public MyvarCraft()
         {
@@ -24,7 +25,7 @@ namespace MyvarCraft
             ThreadPool.QueueUserWorkItem((x) =>
             {
                 //Init server
-                List<Level> Levels = new List<Level>();
+               
                 Levels.Add(new Level()); // Levels[0] = spawn world
                 Levels[0].Start(); // Start, Spawn World
 

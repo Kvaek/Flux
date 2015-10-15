@@ -8,6 +8,6 @@ namespace MyvarCraft.Api.World
 {
     public abstract class WorldProvider
     {
-
+        public abstract Chunk GetChunk(int x, int y);
     }
 }

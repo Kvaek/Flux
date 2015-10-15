@@ -11,7 +11,7 @@ namespace MyvarCraft.Internals
         public string Description { get; set; } = "A MyvarCraft Server";
         public int MaxPlayers { get; set; } = 100;
         public int Port { get; set; } = 25565;
-        public int Protical { get; set; } = 78;
-        public string Version { get; set; } = "15w41b";
+        public int Protical { get; set; } = 79;
+        public string Version { get; set; } = "15w42a";
     }
 }
