@@ -27,7 +27,7 @@ namespace MyvarCraft.Api.World.Providers
                 {
                     for (int z1 = 0; z1 < 16; z1++)
                     {
-                        ch.Blocks.Set(x1, y1, z1, 1 << 4 | 0);
+                        ch.Blocks[0].Set(x1, y1, z1, 1 << 4 | 0);
                     }
                 }
             }

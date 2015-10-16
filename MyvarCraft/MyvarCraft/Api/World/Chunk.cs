@@ -9,11 +9,36 @@ namespace MyvarCraft.Api.World
 {
     public class Chunk
     {
-        public BlockStorage Blocks { get; set; } = new BlockStorage();
+        public List<BlockStorage> Blocks { get; set; } = new List<BlockStorage>()
+        {
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+            new BlockStorage(),
+        };
 
         public byte[] ToPacketFormat()
         {
-            return Blocks.Write();
+            List<byte> Chunks = new List<byte>();
+
+            foreach(var i in Blocks)
+            {
+                Chunks.AddRange(i.Write());
+            }
+
+            return Chunks.ToArray();
         }
     }
 }

@@ -14,7 +14,6 @@ namespace MyvarCraft.Networking.Packets
         public int Y { get; set; }
         public byte GroundUpContinuous { get; set; }
         public int PrimaryBitMask { get; set; }
-        public int Size { get; set; }
         public byte[] Data { get; set; }
 
 
@@ -29,10 +28,10 @@ namespace MyvarCraft.Networking.Packets
             MinecraftStream read = new MinecraftStream();
             read.WriteInt(X);
             read.WriteInt(Y);
-            read.WriteByte(1);
-            read.WriteVarInt(0Xfffffff);
+            read.WriteByte(GroundUpContinuous);
+            read.WriteVarInt(PrimaryBitMask);
 
-            read.WriteVarInt(Size + 256);
+            read.WriteVarInt(Data.Length + 256);
             
             foreach(var i in Data)
             {
@@ -41,7 +40,7 @@ namespace MyvarCraft.Networking.Packets
 
             for (int i = 0; i < 256; i++)
             {
-                ns.WriteByte(1);
+                read.WriteByte(1);
             }
 
             var buf = read.Flush(ID);

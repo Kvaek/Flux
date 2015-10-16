@@ -21,6 +21,7 @@ namespace MyvarCraft.Api
         public int LevelID { get; set; } = 0;
 
         public int State { get; set; } = 0;
+        public int GameMode { get; set; } = Globals.Config.Gamemode;
         public string Name { get; set; }
 
         public double X { get; set; } = 0;
@@ -128,7 +129,7 @@ namespace MyvarCraft.Api
                         //join game
                         var jg = new JoinGame();
                         jg.EntityID = 0;
-                        jg.Gamemode = 0;
+                        jg.Gamemode = (byte)GameMode;
                         jg.Dimension = 0;
                         jg.Difficulty = 0;
                         jg.MaxPlayers = 255;
@@ -152,18 +153,9 @@ namespace MyvarCraft.Api
                         var cd = new ChunkData();
                         cd.X = 0;
                         cd.Y = 0;
-                        cd.GroundUpContinuous = 0;
-                        cd.PrimaryBitMask = 0XFFFFFF;
-                        List<byte> Data = new List<byte>();
-
-                        for (int i = 0; i < 16; i++)
-                        {
-                           // Data.AddRange(MyvarCraft.Levels[LevelID].World.GetChunk(0, 0).ToPacketFormat());
-
-                        }
-
-                        cd.Size = Data.Count;
-                        cd.Data = Data.ToArray();
+                        cd.GroundUpContinuous = 1;
+                        cd.PrimaryBitMask = 1;
+                        cd.Data = MyvarCraft.Levels[LevelID].World.GetChunk(0, 0).ToPacketFormat().ToArray();
                         cd.Write(ns);
                     }
 
@@ -199,7 +191,7 @@ namespace MyvarCraft.Api
             {
                 var ka = new KeepAlive();
                 ka.KeepAliveID = new Random().Next();
-              //  ka.Write(_ns);
+                ka.Write(_ns);
             }
         }
     }
