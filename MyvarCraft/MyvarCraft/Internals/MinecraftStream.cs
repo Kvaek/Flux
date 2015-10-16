@@ -253,10 +253,13 @@ namespace MyvarCraft.Internals
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal void WriteString(string data)
+        internal void WriteString(string data, bool length = true)
         {
             var buffer = Encoding.UTF8.GetBytes(data);
-            WriteVarInt(buffer.Length);
+            if (length)
+            {
+                WriteVarInt(buffer.Length);
+            }
             _buffer.AddRange(buffer);
         }
 

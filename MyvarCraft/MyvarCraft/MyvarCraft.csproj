@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BlockStorage.cs" />
+    <Compile Include="Api\MCChatMessage.cs" />
     <Compile Include="Api\FlexibleStorage.cs" />
     <Compile Include="Api\Level.cs" />
     <Compile Include="Api\Player.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Networking\NetworkingManager.cs" />
     <Compile Include="Networking\Packet.cs" />
     <Compile Include="Networking\PacketManager.cs" />
+    <Compile Include="Networking\Packets\ChatMessage.cs" />
     <Compile Include="Networking\Packets\ChunkData.cs" />
     <Compile Include="Networking\Packets\HandShake.cs" />
     <Compile Include="Networking\Packets\JoinGame.cs" />

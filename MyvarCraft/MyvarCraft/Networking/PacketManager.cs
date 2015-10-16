@@ -16,7 +16,8 @@ namespace MyvarCraft.Networking
             new Request(),
             new Ping(),
             new LoginStart(),
-            new PlayerPositionAndLook()
+            new PlayerPositionAndLook(),
+            new ChatMessage()
            
         };
 

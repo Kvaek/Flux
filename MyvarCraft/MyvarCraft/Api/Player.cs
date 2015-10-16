@@ -24,6 +24,8 @@ namespace MyvarCraft.Api
         public int GameMode { get; set; } = Globals.Config.Gamemode;
         public string Name { get; set; }
 
+        
+
         public double X { get; set; } = 0;
         public double Y { get; set; } = 50;
         public double Z { get; set; } = 0;
@@ -176,10 +178,24 @@ namespace MyvarCraft.Api
                        // Yaw = x.Yaw;
                        // Pitch = x.Pitch;
                     }
+
+
+                    if (c is ChatMessage)
+                    {                        
+                        var x = c as ChatMessage;
+                        MyvarCraft.Levels[LevelID].BroadCastMessage(new MCChatMessage("[" + Name + "]" + x.Message), 0);
+                    }
                     break;
             }
         }
 
+        public void SendChat(MCChatMessage m, int loc)
+        {
+            var cm = new ChatMessage();
+            cm.JSONData = JsonConvert.SerializeObject(m);
+            cm.Position = (byte)loc;
+            cm.Write(_ns);
+        }
 
         private string GetUuid(string username)
         {

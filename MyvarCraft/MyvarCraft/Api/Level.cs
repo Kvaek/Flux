@@ -15,6 +15,21 @@ namespace MyvarCraft.Api
 
         public WorldProvider World { get; set; } = new FlatLand();
 
+        public void BroadCastMessage(MCChatMessage m, int loc)
+        {
+            try
+            {
+                foreach (var i in Players.ToArray())
+                {
+                    i.SendChat(m, loc);
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         public void Start()
         {
             ThreadPool.QueueUserWorkItem((x) =>
