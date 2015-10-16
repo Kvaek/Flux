@@ -32,6 +32,14 @@ namespace MyvarCraft.Api.World.Providers
                 }
             }
 
+            for (int x1 = 0; x1 < 16; x1++)
+            {
+                for (int z1 = 0; z1 < 16; z1++)
+                {
+                    ch.Blocks[0].Set(x1, 4, z1, 2 << 4 | 0);
+                }
+            }
+
             Chunks.Add(x + "," + y, ch);
             return ch;
         }

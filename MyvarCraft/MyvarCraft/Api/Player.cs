@@ -28,8 +28,12 @@ namespace MyvarCraft.Api
         public double Y { get; set; } = 50;
         public double Z { get; set; } = 0;
 
+        public bool Spawned { get; set; } = false;
+
         public float Yaw { get; set; } = 0;
         public float Pitch { get; set; } = 0;
+
+        public List<string> LoadedChunks = new List<string>();
 
         public Player(TcpClient c)
         {
@@ -55,8 +59,9 @@ namespace MyvarCraft.Api
                             HandlePacket(PacketManager.GetPacket(buffer, State), _ns);
 
                         }
-                        catch
+                        catch(Exception ee)
                         {
+                            Console.WriteLine(ee.ToString());
                             _ns.Close();
                             _ns.Dispose();
                             tcp.Close();
@@ -113,8 +118,6 @@ namespace MyvarCraft.Api
                     break;
                 case 2:
 
-                   
-
                     if (c is LoginStart)
                     {
                         //login
@@ -157,9 +160,22 @@ namespace MyvarCraft.Api
                         cd.PrimaryBitMask = 1;
                         cd.Data = MyvarCraft.Levels[LevelID].World.GetChunk(0, 0).ToPacketFormat().ToArray();
                         cd.Write(ns);
+
+                        LoadedChunks.Add("0,0");
+
+                        Spawned = true;
                     }
 
-
+                    if (c is PlayerPositionAndLook && Spawned)
+                    {
+                        //update player pos
+                        var x = c as PlayerPositionAndLook;
+                        X = x.X;
+                        Y = x.Y;
+                        Z = x.Z;
+                       // Yaw = x.Yaw;
+                       // Pitch = x.Pitch;
+                    }
                     break;
             }
         }
@@ -185,13 +201,54 @@ namespace MyvarCraft.Api
             }
         }
 
+        public static int DivideRoundingUp(int x, int y)
+        {
+            // TODO: Define behaviour for negative numbers
+            int remainder;
+            int quotient = Math.DivRem(x, y, out remainder);
+            return remainder == 0 ? quotient : quotient + 1;
+        }
+
+        public void UpdateChunks()
+        {
+            var h = Globals.Config.ViewDistance;
+            var l = Globals.Config.ViewDistance - (Globals.Config.ViewDistance * 2);
+
+            var X1 = DivideRoundingUp((int)X, 16);
+            var Z1 = DivideRoundingUp((int)Z, 16);
+
+            for (int x = l  ; x < h; x++)
+            {
+                for (int z = l ; z < h; z++)
+                {
+                    if(!LoadedChunks.Contains((x) + "," + (z)))
+                    {
+                        //send chunk
+                        var cd = new ChunkData();
+                        cd.X = x;
+                        cd.Y = z;
+                        cd.GroundUpContinuous = 1;
+                        cd.PrimaryBitMask = 1;
+                        cd.Data = MyvarCraft.Levels[LevelID].World.GetChunk(x ,  z ).ToPacketFormat().ToArray();
+                        cd.Write(_ns);
+
+                        LoadedChunks.Add((x) + "," + (z ));
+                    }
+                }
+            }
+
+        }
+
+
         public void Update()
         {
-            if (_ns.CanWrite && State == 2)
+            if (_ns.CanWrite && State == 2 && Spawned)
             {
                 var ka = new KeepAlive();
                 ka.KeepAliveID = new Random().Next();
                 ka.Write(_ns);
+
+                UpdateChunks();
             }
         }
     }

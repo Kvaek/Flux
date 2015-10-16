@@ -70,7 +70,15 @@ namespace MyvarCraft.Internals
             return BitConverter.ToInt16(b, 0);
         }
 
-
+        internal float ReadFloat(byte[] buffer)
+        {
+            byte[] b = new byte[4];
+            b[0] = ReadByte(buffer);
+            b[1] = ReadByte(buffer);
+            b[2] = ReadByte(buffer);
+            b[3] = ReadByte(buffer);
+            return BitConverter.ToSingle(b, 0);
+        }
 
         internal ushort ReadUShort(byte[] buffer)
         {

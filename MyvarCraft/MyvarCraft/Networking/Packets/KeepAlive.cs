@@ -14,23 +14,10 @@ namespace MyvarCraft.Networking.Packets
 
         public KeepAlive()
         {
-            IDs.Add(-1);
-            IDs.Add(-1);
-            IDs.Add(-1);
-
             ID = 0x1F;
         }
 
-        public override Packet Parse(byte[] data)
-        {
-            var re = new KeepAlive();
-            MinecraftStream ms = new MinecraftStream();
-            ms.ReadVarInt(data);
-            re.ID = ms.ReadVarInt(data);
-            re.KeepAliveID = ms.ReadVarInt(data);
-            return re;
-        }
-
+      
         public override void Write(NetworkStream ns)
         {
             MinecraftStream read = new MinecraftStream();
