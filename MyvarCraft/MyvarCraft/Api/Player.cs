@@ -183,7 +183,10 @@ namespace MyvarCraft.Api
                     if (c is ChatMessage)
                     {                        
                         var x = c as ChatMessage;
-                        MyvarCraft.Levels[LevelID].BroadCastMessage(new MCChatMessage("[" + Name + "]" + x.Message), 0);
+                        if (!x.Message.StartsWith("/"))
+                        {
+                            MyvarCraft.Levels[LevelID].BroadCastMessage(new MCChatMessage("<" + Name + "> " + x.Message), 0);
+                        }
                     }
                     break;
             }
