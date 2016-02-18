@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{33E753A2-9324-4A70-8862-E5166D70736D}</ProjectGuid>
+    <ProjectGuid>{482C1936-ABFC-4CAD-844A-DB7256D89FD3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyvarCraft</RootNamespace>
@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,10 +52,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\1.9-pre1\1.9-pre1.csproj">
+      <Project>{58af3578-ce4a-461c-a896-dca27cea36af}</Project>
+      <Name>1.9-pre1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyvarCraft.Core\MyvarCraft.Core.csproj">
-      <Project>{06349495-d2af-4ba4-8555-9aca07430898}</Project>
+      <Project>{f8b874f3-fa5e-41fd-9a93-6ba4d828b519}</Project>
       <Name>MyvarCraft.Core</Name>
     </ProjectReference>
   </ItemGroup>

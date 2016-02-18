@@ -10,17 +10,20 @@ namespace MyvarCraft.Core.Internals
 {
     public class MinecraftStream
     {
-        internal List<byte> _buffer = new List<byte>();
-        internal int _offset = 0;
 
-        internal byte ReadByte(byte[] buffer)
+        public List<byte> _buffer = new List<byte>();
+        public int _offset = 0;
+
+        public byte ReadByte(byte[] buffer)
         {
-            var b = buffer[_offset];
-            _offset += 1;
-            return b;
+            
+                var b = buffer[_offset];
+                _offset += 1;
+                return b;
+           
         }
 
-        internal byte[] Read(byte[] buffer, int length)
+        public byte[] Read(byte[] buffer, int length)
         {
             var data = new byte[length];
             Array.Copy(buffer, _offset, data, 0, length);
@@ -28,7 +31,7 @@ namespace MyvarCraft.Core.Internals
             return data;
         }
 
-        internal int ReadVarInt(byte[] buffer)
+        public int ReadVarInt(byte[] buffer)
         {
             var value = 0;
             var size = 0;
@@ -45,7 +48,7 @@ namespace MyvarCraft.Core.Internals
         }
 
 
-        internal long ReadLong(byte[] buffer)
+        public long ReadLong(byte[] buffer)
         {
             byte[] b = new byte[8];
             b[0] = ReadByte(buffer);
@@ -61,7 +64,7 @@ namespace MyvarCraft.Core.Internals
             return BitConverter.ToInt64(b, 0);
         }
 
-        internal short ReadShort(byte[] buffer)
+        public short ReadShort(byte[] buffer)
         {
             byte[] b = new byte[2];
             b[0] = ReadByte(buffer);
@@ -69,7 +72,7 @@ namespace MyvarCraft.Core.Internals
             return BitConverter.ToInt16(b, 0);
         }
 
-        internal float ReadFloat(byte[] buffer)
+        public float ReadFloat(byte[] buffer)
         {
             byte[] b = new byte[4];
             b[0] = ReadByte(buffer);
@@ -79,7 +82,7 @@ namespace MyvarCraft.Core.Internals
             return BitConverter.ToSingle(b, 0);
         }
 
-        internal ushort ReadUShort(byte[] buffer)
+        public ushort ReadUShort(byte[] buffer)
         {
             byte[] b = new byte[2];
             b[0] = ReadByte(buffer);
@@ -87,13 +90,14 @@ namespace MyvarCraft.Core.Internals
             return BitConverter.ToUInt16(b, 0);
         }
 
-        internal string ReadString(byte[] buffer, int length)
+        public string ReadString(byte[] buffer)
         {
+            var length = ReadVarInt(buffer);
             var data = Read(buffer, length);
             return Encoding.UTF8.GetString(data);
         }
 
-        internal void WriteVarInt(int _value)
+        public void WriteVarInt(int _value)
         {
             /*   while ((value & 128) != 0)
                {
@@ -154,22 +158,22 @@ namespace MyvarCraft.Core.Internals
 
             return a;
         }
-        internal void WriteShort(short value)
+        public void WriteShort(short value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal void WriteUShort(ushort value)
+        public void WriteUShort(ushort value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal void WriteInt(int value)
+        public void WriteInt(int value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal void WriteFloat(float value)
+        public void WriteFloat(float value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
@@ -208,14 +212,14 @@ namespace MyvarCraft.Core.Internals
             return *(double*)&value;
         }
 
-        internal void WriteSingle(Single value)
+        public void WriteSingle(Single value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
 
 
-        internal unsafe void WriteDouble(double value)
+        public unsafe void WriteDouble(double value)
         {
             WriteUInt64(*(ulong*)&value);
         }
@@ -233,29 +237,29 @@ namespace MyvarCraft.Core.Internals
 
         }
 
-        internal void WriteInt64(Int64 value)
+        public void WriteInt64(Int64 value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal void WriteByte(byte value)
+        public void WriteByte(byte value)
         {
             _buffer.Add(BitConverter.GetBytes(value)[0]);
         }
-        internal void WriteSByte(sbyte value)
+        public void WriteSByte(sbyte value)
         {
             _buffer.Add(BitConverter.GetBytes(value)[0]);
         }
 
-        internal void WriteLong(long value)
+        public void WriteLong(long value)
         {
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        internal void WriteString(string data, bool length = true)
+        public void WriteString(string data)
         {
             var buffer = Encoding.UTF8.GetBytes(data);
-            if (length)
+          //  if (length)
             {
                 WriteVarInt(buffer.Length);
             }
@@ -263,7 +267,7 @@ namespace MyvarCraft.Core.Internals
         }
 
 
-        internal byte[] Flush(int id = -1)
+        public byte[] Flush(int id = -1)
         {
             var buffer = _buffer.ToArray();
             _buffer.Clear();
@@ -287,5 +291,6 @@ namespace MyvarCraft.Core.Internals
             System.Buffer.BlockCopy(buffer, 0, rv, bufferLength.Length + packetData.Length, buffer.Length);
             return rv;
         }
+
     }
 }

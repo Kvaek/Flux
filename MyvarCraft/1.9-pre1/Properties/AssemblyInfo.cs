@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MyvarCraft")]
+[assembly: AssemblyTitle("1.9-pre1")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MyvarCraft")]
+[assembly: AssemblyProduct("1.9-pre1")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("482c1936-abfc-4cad-844a-db7256d89fd3")]
+[assembly: Guid("58af3578-ce4a-461c-a896-dca27cea36af")]
 
 // Version information for an assembly consists of the following four values:
 //
