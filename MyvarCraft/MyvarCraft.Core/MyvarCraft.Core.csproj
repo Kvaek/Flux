@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{33E753A2-9324-4A70-8862-E5166D70736D}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{06349495-D2AF-4BA4-8555-9ACA07430898}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyvarCraft</RootNamespace>
-    <AssemblyName>MyvarCraft</AssemblyName>
+    <RootNamespace>MyvarCraft.Core</RootNamespace>
+    <AssemblyName>MyvarCraft.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,9 +20,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,17 +45,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Internals\Config.cs" />
+    <Compile Include="Internals\MinecraftStream.cs" />
+    <Compile Include="Internals\NetworkManager.cs" />
+    <Compile Include="Internals\Packet.cs" />
+    <Compile Include="Internals\PacketManager.cs" />
+    <Compile Include="Internals\Packets\HandShake.cs" />
+    <Compile Include="Internals\Packets\Ping.cs" />
+    <Compile Include="Internals\Packets\Pong.cs" />
+    <Compile Include="Internals\Packets\Request.cs" />
+    <Compile Include="Internals\Packets\Response.cs" />
+    <Compile Include="Objects\Level.cs" />
+    <Compile Include="Objects\Player.cs" />
+    <Compile Include="MyvarCraft.cs" />
+    <Compile Include="Objects\ServerList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MyvarCraft.Core\MyvarCraft.Core.csproj">
-      <Project>{06349495-d2af-4ba4-8555-9aca07430898}</Project>
-      <Name>MyvarCraft.Core</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

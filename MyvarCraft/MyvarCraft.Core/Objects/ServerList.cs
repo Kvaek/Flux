@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyvarCraft.Api.ServerList
+namespace MyvarCraft.Core.Objects.ServerList
 {
     public class Responce
     {
@@ -15,18 +15,18 @@ namespace MyvarCraft.Api.ServerList
 
     public class Version
     {
-        public string name { get; set; } = Globals.Config.Version;
-        public int protocol { get; set; } = Globals.Config.Protical;
+        public string name { get; set; } = MyvarCraft.Config.Version;
+        public int protocol { get; set; } = MyvarCraft.Config.Protical;
     }
 
     public class Description
     {
-        public string text { get; set; } = Globals.Config.Description;
+        public string text { get; set; } = MyvarCraft.Config.Description;
     }
 
     public class Players
     {
-        public int max { get; set; } = Globals.Config.MaxPlayers;
+        public int max { get; set; } = MyvarCraft.Config.MaxPlayers;
         public int online { get; set; } = 0;
     }
 }

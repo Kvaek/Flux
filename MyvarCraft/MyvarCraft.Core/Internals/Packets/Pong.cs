@@ -1,29 +1,27 @@
-﻿using MyvarCraft.Internals;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyvarCraft.Networking.Packets
+namespace MyvarCraft.Core.Internals.Packets
 {
-    public class LoginSuccess : Packet
+    public class Pong : Packet
     {
-        public string UUID { get; set; }
-        public string Username { get; set; }
+        public long Payload { get; set; }
 
-        public LoginSuccess()
+        public Pong()
         {
-
-            ID = 0x02;
+            IDs.Add(-1);
+            IDs.Add(0x01);
+            IDs.Add(-1);
         }
 
         public override void Write(NetworkStream ns)
         {
             MinecraftStream read = new MinecraftStream();
-            read.WriteString(UUID);
-            read.WriteString(Username);
+            read.WriteLong(Payload);
             var buf = read.Flush(ID);
             ns.Write(buf, 0, buf.Length);
         }

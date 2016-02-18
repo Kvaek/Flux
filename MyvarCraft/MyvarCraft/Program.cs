@@ -10,8 +10,13 @@ namespace MyvarCraft
     {
         static void Main(string[] args)
         {
-            var mc = new MyvarCraft();
+            Core.MyvarCraft mc = new Core.MyvarCraft();
             mc.Start();
+
+            while(true)
+            {
+
+            }
         }
     }
 }

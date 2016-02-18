@@ -1,11 +1,10 @@
-﻿using MyvarCraft.Internals;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyvarCraft.Networking.Packets
+namespace MyvarCraft.Core.Internals.Packets
 {
     public class Request : Packet
     {

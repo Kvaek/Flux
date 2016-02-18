@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyvarCraft", "MyvarCraft\MyvarCraft.csproj", "{D3E6D03A-6231-47A4-AEFE-18F3B7AA9CDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyvarCraft", "MyvarCraft\MyvarCraft.csproj", "{33E753A2-9324-4A70-8862-E5166D70736D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyvarCraft.Core", "MyvarCraft.Core\MyvarCraft.Core.csproj", "{06349495-D2AF-4BA4-8555-9ACA07430898}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3E6D03A-6231-47A4-AEFE-18F3B7AA9CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3E6D03A-6231-47A4-AEFE-18F3B7AA9CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3E6D03A-6231-47A4-AEFE-18F3B7AA9CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3E6D03A-6231-47A4-AEFE-18F3B7AA9CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33E753A2-9324-4A70-8862-E5166D70736D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E753A2-9324-4A70-8862-E5166D70736D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E753A2-9324-4A70-8862-E5166D70736D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33E753A2-9324-4A70-8862-E5166D70736D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06349495-D2AF-4BA4-8555-9ACA07430898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06349495-D2AF-4BA4-8555-9ACA07430898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06349495-D2AF-4BA4-8555-9ACA07430898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06349495-D2AF-4BA4-8555-9ACA07430898}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

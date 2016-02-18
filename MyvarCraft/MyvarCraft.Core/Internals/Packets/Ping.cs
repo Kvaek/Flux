@@ -1,31 +1,29 @@
-﻿using MyvarCraft.Internals;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyvarCraft.Networking.Packets
+namespace MyvarCraft.Core.Internals.Packets
 {
-    public class LoginStart : Packet
+    public class Ping : Packet
     {
-        public string Name { get; set; }
+        public long Payload { get; set; }
 
-        public LoginStart()
+        public Ping()
         {
             IDs.Add(-1);
+            IDs.Add(0x01);
             IDs.Add(-1);
-            IDs.Add(0);
         }
 
         public override Packet Parse(byte[] data)
         {
-            var re = new LoginStart();
+            var re = new Ping();
             MinecraftStream ms = new MinecraftStream();
             ms.ReadVarInt(data);
             re.ID = ms.ReadVarInt(data);
-            var l = ms.ReadVarInt(data);
-            re.Name = ms.ReadString(data, l);
+            re.Payload = ms.ReadLong(data);
             return re;
         }
     }

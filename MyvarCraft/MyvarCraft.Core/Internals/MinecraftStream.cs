@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyvarCraft.Internals
+namespace MyvarCraft.Core.Internals
 {
     public class MinecraftStream
     {
-
         internal List<byte> _buffer = new List<byte>();
         internal int _offset = 0;
 
@@ -288,6 +287,5 @@ namespace MyvarCraft.Internals
             System.Buffer.BlockCopy(buffer, 0, rv, bufferLength.Length + packetData.Length, buffer.Length);
             return rv;
         }
-      
     }
 }
