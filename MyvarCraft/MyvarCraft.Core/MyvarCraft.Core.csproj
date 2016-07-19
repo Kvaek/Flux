@@ -47,12 +47,18 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MinecraftServer.cs" />
+    <Compile Include="Objects\Block.cs" />
+    <Compile Include="Objects\Meta\Chunck.cs" />
     <Compile Include="Objects\Meta\Enums.cs" />
     <Compile Include="Objects\Meta\Location.cs" />
     <Compile Include="Objects\Meta\Look.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Objects\World.cs" />
+    <Compile Include="Objects\IWorldGenerator.cs" />
+    <Compile Include="Objects\WorldGenerators\FlatLand.cs" />
     <Compile Include="Packet.cs" />
+    <Compile Include="Packets\ChunckData.cs" />
+    <Compile Include="Packets\ClientStatus.cs" />
     <Compile Include="Packets\HandShake.cs" />
     <Compile Include="Packets\JoinGame.cs" />
     <Compile Include="Packets\LoginStart.cs" />
@@ -68,6 +74,7 @@
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Services\ServerListService.cs" />
+    <Compile Include="Utils\ChunkStream.cs" />
     <Compile Include="Utils\MinecraftStream.cs" />
   </ItemGroup>
   <ItemGroup>

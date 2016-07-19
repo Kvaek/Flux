@@ -13,9 +13,10 @@ namespace MyvarCraft.Core.Objects
         public Guid OwnerID { get; set; } = Guid.NewGuid();
         public int GameMode { get; set; } = 1;
 
-        public Location Posistion { get; set; }
-        public Look Look { get; set; }
+        public Location Posistion { get; set; } = new Location();
+        public Look Look { get; set; } = new Look();
 
-        public bool Spawned { get; set; } = true;
+        public bool Spawned { get; set; } = false;
+        public bool SpawnedCunckLoaded { get; set; } = false;
     }
 }

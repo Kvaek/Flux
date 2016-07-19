@@ -16,6 +16,7 @@ namespace MyvarCraft.Core.Packets
             IDs.Add(-1);
             IDs.Add(-1);
             IDs.Add(0);
+
         }
 
         public override Packet Read(byte[] data)
