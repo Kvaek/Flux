@@ -23,56 +23,103 @@ namespace MyvarCraft.Core.Utils
         {
             WriteByte(13);//bpb
             WriteVarInt(0);//we are using global pallet
-            
+
         }
+
+        public BitArray BitsReverse(BitArray bits)
+        {
+            int len = bits.Count;
+            BitArray a = new BitArray(bits);
+            BitArray b = new BitArray(bits);
+
+            for (int i = 0, j = len - 1; i < len; ++i, --j)
+            {
+                a[i] = a[i] ^ b[j];
+                b[j] = a[i] ^ b[j];
+                a[i] = a[i] ^ b[j];
+            }
+
+            return a;
+        }
+
+
+      
 
         public void WriteBlockData(Chunck c)
         {
             BitArray bits = new BitArray((16 * 16 * 16 * 13));
-            int off = 0;
+            int offm = 0;
             for (int y = 0; y < 16; y++)
             {
                 for (int z = 0; z < 16; z++)
                 {
                     for (int x = 0; x < 16; x++)
                     {
-                        var b = c.GetBlock(x, y, z);
-                        var id = new BitArray(BitConverter.GetBytes(b.ID));
+                        int off = 0;
+                        var tmpbts = new BitArray(13);
+                        var b = c.GetBlock(new Location() { X = x, Y = y, Z = z });
+                                                   
+
+                        var id = BitsReverse(new BitArray(BitConverter.GetBytes(b.ID).Reverse().ToArray()));
                         for (int i = 0; i < 9; i++)
                         {
-                            bits.Set(off, id[i]);
+                            tmpbts.Set(off, id[i]);
                             off++;
                         }
 
-                        var damage = new BitArray(BitConverter.GetBytes(b.Damage));
+                        var damage = BitsReverse(new BitArray(BitConverter.GetBytes(b.Damage).Reverse().ToArray()));
                         for (int i = 0; i < 4; i++)
                         {
-                            bits.Set(off, damage[i]);
+                            tmpbts.Set(off, damage[i]);
                             off++;
+                        }
+
+                        foreach (bool i in tmpbts)
+                        {
+                            bits[offm] = i;
+                            offm++;
                         }
                     }
                 }
             }
 
-            byte[] tmp = new byte[(bits.Length + 7) / 8];
+            byte[] tmp = new byte[DivideRoundingUp(bits.Count, 8)];
             bits.CopyTo(tmp, 0);
 
-            WriteVarInt((tmp.Count() / 8));//data size
+            WriteVarInt(DivideRoundingUp(tmp.Count(), 8));//data size
 
-            int cout = 0;
-            List<byte> tmpbuf = new List<byte>();
-            foreach(var i in tmp)
+             int cout = 0;
+             List<byte> tmpbuf = new List<byte>();
+             foreach (var i in tmp)
+             {
+                 tmpbuf.Add(i);
+                 cout++;
+                 if (cout == 8)
+                 {
+                    tmpbuf.Reverse();
+                    RawBuffer.AddRange(tmpbuf);
+                    // WriteLong(BitConverter.ToInt64(tmpbuf.ToArray(), 0));
+                     tmpbuf.Clear();
+                     cout = 0;
+                 }
+             }
+
+            
+        /*    unsafe
             {
-                tmpbuf.Add(i);
-                cout++;
-                if(cout == 8)
+                fixed (byte* pBuffer = tmp)
                 {
-                    WriteLong((long)BitConverter.ToInt64(tmpbuf.ToArray(), 0));
-                    tmpbuf.Clear();
-                    cout = 0;
+                    Int64* pSample = (long*)pBuffer;
+                    for (int i = 0; i < DivideRoundingUp(bits.Count, 8); i++)
+                    {
+                        var along = pSample[i];
+                        WriteLong(along);
+                    }
+                    
                 }
-            }
+            }*/
 
+           //   RawBuffer.AddRange(tmp);
 
             List<byte> tmpbuflight = new List<byte>();
             for (int i = 0; i < (16 * 16 * 16) / 2; i++)
@@ -84,9 +131,21 @@ namespace MyvarCraft.Core.Utils
             RawBuffer.AddRange(tmpbuflight);//skylight
         }
 
+        public static int DivideRoundingUp(int x, int y)
+        {
+            // TODO: Define behaviour for negative numbers
+            int remainder;
+            int quotient = Math.DivRem(x, y, out remainder);
+            return remainder == 0 ? quotient : quotient + 1;
+        }
+
         public void WriteLong(long value)
         {
-            RawBuffer.AddRange(BitConverter.GetBytes(value));
+            var bytes = BitConverter.GetBytes(value);
+   
+            Array.Reverse(bytes);
+            
+            RawBuffer.AddRange(bytes);
         }
 
         public void WriteVarInt(int _value)

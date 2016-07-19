@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyvarCraft.Core.Packets;
+using MyvarCraft.Core.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -98,22 +100,36 @@ namespace MyvarCraft.Core.Services
             {
                 foreach (var i in _cw.ToArray())
                 {
-                    TickNetwork(i);
-                    SendPackets(i);
+                    try
+                    {
+                        TickNetwork(i);
+                        SendPackets(i);
+                    }
+                    catch(Exception ee)
+                    {
+                        _cw.Remove(i);
+                    }
                 }
             }
         }
 
         public void SendPackets(ConnectionWrapper i)
         {
-            var send = GetPacket(i.OwnerID, true);
-            if (send != null)
+            while (true)
             {
-                i.Send(send);
-                if (send.KillSwitch)
+                var send = GetPacket(i.OwnerID, true);
+                if (send != null)
                 {
-                    _cw.Remove(i);
-                    LoginService.Disconnected(i.OwnerID);
+                    i.Send(send);
+                    if (send.KillSwitch)
+                    {
+                        _cw.Remove(i);
+                        LoginService.Disconnected(i.OwnerID);
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
         }
@@ -122,11 +138,9 @@ namespace MyvarCraft.Core.Services
         {
             var value = 0;
             var size = 0;
-            var bsize = 0;
             int b;
             while (((b = ns.ReadByte()) & 0x80) == 0x80)
             {
-                bsize++;
                 value |= (b & 0x7F) << (size++ * 7);
                 if (size > 5)
                 {
@@ -149,12 +163,42 @@ namespace MyvarCraft.Core.Services
                     if (i._ns.DataAvailable)
                     {
 
-                        byte[] buffer = new byte[ReadVarInt(i._ns)];                     
-                        
+                        byte[] buffer = new byte[ReadVarInt(i._ns)];
+
                         int bytesread = i._ns.Read(buffer, 0, buffer.Length);
                         Array.Resize(ref buffer, bytesread);//resize just to be on the safe side
+                        Packet pp = null;
 
-                        var pp = Packet.GetPacket(buffer, i.State);
+                        if (i.Logeddin)
+                        {
+                            var ms = new MinecraftStream(buffer);
+                            var id = ms.ReadVarInt();
+                            if(id == 0)
+                            {
+                               
+                            }
+                            else
+                            {
+                                pp = Packet.GetPacket(buffer, i.State);
+                            }
+                        }
+                        else
+                        {
+                            pp = Packet.GetPacket(buffer, i.State);
+                        }
+
+                    
+                       
+                        if (i.Logeddin)
+                        {
+                            
+                        }
+
+                        if (pp is LoginStart)
+                        {
+                            i.Logeddin = true;
+                        }
+
                         if (pp != null)
                         {
                             pp.Owner = i.OwnerID;
@@ -204,6 +248,7 @@ namespace MyvarCraft.Core.Services
         public NetworkStream _ns { get; set; }
         public Guid OwnerID { get; set; } = Guid.NewGuid();
         public int State { get; set; } = 0;
+        public bool Logeddin { get; set; } = false;
 
         public ConnectionWrapper(TcpClient c)
         {

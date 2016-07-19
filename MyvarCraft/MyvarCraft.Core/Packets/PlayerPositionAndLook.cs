@@ -15,8 +15,8 @@ namespace MyvarCraft.Core.Packets
         public double Z { get; set; }
         public float Yaw { get; set; }
         public float Pitch { get; set; }
-        public byte Flags { get; set; }
-        public int TeleportID { get; set; }
+        public byte Flags { get; set; } = 255;
+        public int TeleportID { get; set; } = new Random().Next();
 
         public PlayerPositionAndLook()
         {
@@ -25,6 +25,7 @@ namespace MyvarCraft.Core.Packets
             IDs.Add(0x0C);
 
             ID = 0x2E;
+            Send = true;
         }
 
         public override Packet Read(byte[] data)

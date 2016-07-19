@@ -12,14 +12,14 @@ namespace MyvarCraft.Core.Objects.WorldGenerators
         public Chunck GetChunck(int ax, int ay)
         {
             var c = new Chunck();
-
-            for (int x = 0; x < 16; x++)
+            int id = 0;
+            for (int y = 0; y < 3; y++)
             {
                 for (int z = 0; z < 16; z++)
                 {
-                    for (int y = 0; y < 3; y++)
+                    for (int x = 0; x < 16; x++)
                     {
-                        c.SetBlock(new Block() { ID = 1, Damage = 0 }, new Location() { X = z, Y = y, Z = z });
+                        c.SetBlock(new Block() { ID = 3, Damage = 0 }, new Location() { X = x, Y = y, Z = z });
                     }
                 }
             }

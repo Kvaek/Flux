@@ -53,6 +53,7 @@ namespace MyvarCraft.Core
         {
             var ms = new MinecraftStream(raw);
             var id = ms.ReadVarInt();
+
             foreach (var i in _packets)
             {
                 if (i.IDs[state] == id)

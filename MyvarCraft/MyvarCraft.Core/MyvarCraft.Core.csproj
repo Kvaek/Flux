@@ -61,6 +61,7 @@
     <Compile Include="Packets\ClientStatus.cs" />
     <Compile Include="Packets\HandShake.cs" />
     <Compile Include="Packets\JoinGame.cs" />
+    <Compile Include="Packets\KeepAlive.cs" />
     <Compile Include="Packets\LoginStart.cs" />
     <Compile Include="Packets\LoginSuccess.cs" />
     <Compile Include="Packets\Ping.cs" />

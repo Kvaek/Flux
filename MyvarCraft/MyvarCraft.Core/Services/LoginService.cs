@@ -46,6 +46,20 @@ namespace MyvarCraft.Core.Services
 
         public void Tick()
         {
+            lock (MinecraftServer.Worlds)
+            {
+                foreach (var i in MinecraftServer.Worlds)
+                {
+                    foreach (var p in i.Players)
+                    {
+                        var ka = new KeepAlive() { Owner = p.OwnerID };
+                        ka.KeepAliveID = new Random().Next();
+
+                        NetworkService.EnqueuePacket(ka);
+                    }
+                }
+            }
+
             if (NetworkService.IsAvalible(new LoginStart()))
             {
                 var p = NetworkService.GetPacket<LoginStart>() as LoginStart;
