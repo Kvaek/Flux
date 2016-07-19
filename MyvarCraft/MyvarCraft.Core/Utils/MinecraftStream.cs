@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyvarCraft.Core.Internals
+namespace MyvarCraft.Core.Utils
 {
     public class MinecraftStream
     {
@@ -14,16 +14,26 @@ namespace MyvarCraft.Core.Internals
         public List<byte> _buffer = new List<byte>();
         public int _offset = 0;
 
-        public byte ReadByte(byte[] buffer)
+        private byte[] buffer { get; set; }
+
+        public MinecraftStream()
         {
-            
-                var b = buffer[_offset];
-                _offset += 1;
-                return b;
-           
+
         }
 
-        public byte[] Read(byte[] buffer, int length)
+        public MinecraftStream(byte[] abuffer)
+        {
+            buffer = abuffer;
+        }
+
+        public byte ReadByte()
+        {
+            var b = buffer[_offset];
+            _offset += 1;
+            return b;
+        }
+
+        public byte[] Read(int length)
         {
             var data = new byte[length];
             Array.Copy(buffer, _offset, data, 0, length);
@@ -31,12 +41,12 @@ namespace MyvarCraft.Core.Internals
             return data;
         }
 
-        public int ReadVarInt(byte[] buffer)
+        public int ReadVarInt()
         {
             var value = 0;
             var size = 0;
             int b;
-            while (((b = ReadByte(buffer)) & 0x80) == 0x80)
+            while (((b = ReadByte()) & 0x80) == 0x80)
             {
                 value |= (b & 0x7F) << (size++ * 7);
                 if (size > 5)
@@ -48,52 +58,51 @@ namespace MyvarCraft.Core.Internals
         }
 
 
-        public long ReadLong(byte[] buffer)
+        public long ReadLong()
         {
             byte[] b = new byte[8];
-            b[0] = ReadByte(buffer);
-            b[1] = ReadByte(buffer);
-            b[2] = ReadByte(buffer);
-            b[3] = ReadByte(buffer);
+            b[0] = ReadByte();
+            b[1] = ReadByte();
+            b[2] = ReadByte();
+            b[3] = ReadByte();
 
-            b[4] = ReadByte(buffer);
-            b[5] = ReadByte(buffer);
-            b[6] = ReadByte(buffer);
-            b[7] = ReadByte(buffer);
+            b[4] = ReadByte();
+            b[5] = ReadByte();
+            b[6] = ReadByte();
+            b[7] = ReadByte();
 
             return BitConverter.ToInt64(b, 0);
         }
 
-        public short ReadShort(byte[] buffer)
+        public short ReadShort()
         {
             byte[] b = new byte[2];
-            b[0] = ReadByte(buffer);
-            b[1] = ReadByte(buffer);
+            b[0] = ReadByte();
+            b[1] = ReadByte();
             return BitConverter.ToInt16(b, 0);
         }
 
-        public float ReadFloat(byte[] buffer)
+        public float ReadFloat()
         {
             byte[] b = new byte[4];
-            b[0] = ReadByte(buffer);
-            b[1] = ReadByte(buffer);
-            b[2] = ReadByte(buffer);
-            b[3] = ReadByte(buffer);
+            b[0] = ReadByte();
+            b[1] = ReadByte();
+            b[2] = ReadByte();
+            b[3] = ReadByte();
             return BitConverter.ToSingle(b, 0);
         }
 
-        public ushort ReadUShort(byte[] buffer)
+        public ushort ReadUShort()
         {
             byte[] b = new byte[2];
-            b[0] = ReadByte(buffer);
-            b[1] = ReadByte(buffer);
+            b[0] = ReadByte();
+            b[1] = ReadByte();
             return BitConverter.ToUInt16(b, 0);
         }
 
-        public string ReadString(byte[] buffer)
+        public string ReadString(int length)
         {
-            var length = ReadVarInt(buffer);
-            var data = Read(buffer, length);
+            var data = Read(length);
             return Encoding.UTF8.GetString(data);
         }
 
@@ -178,37 +187,37 @@ namespace MyvarCraft.Core.Internals
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        public ulong ReadUInt64(byte[] b)
+        public ulong ReadUInt64()
         {
             return unchecked(
-                   ((ulong)ReadByte(b) << 56) |
-                   ((ulong)ReadByte(b) << 48) |
-                   ((ulong)ReadByte(b) << 40) |
-                   ((ulong)ReadByte(b) << 32) |
-                   ((ulong)ReadByte(b) << 24) |
-                   ((ulong)ReadByte(b) << 16) |
-                   ((ulong)ReadByte(b) << 8) |
-                    (ulong)ReadByte(b));
+                   ((ulong)ReadByte() << 56) |
+                   ((ulong)ReadByte() << 48) |
+                   ((ulong)ReadByte() << 40) |
+                   ((ulong)ReadByte() << 32) |
+                   ((ulong)ReadByte() << 24) |
+                   ((ulong)ReadByte() << 16) |
+                   ((ulong)ReadByte() << 8) |
+                    (ulong)ReadByte());
         }
 
-        public uint ReadUInt32(byte[] b)
+        public uint ReadUInt32()
         {
             return (uint)(
-                (ReadByte(b) << 24) |
-                (ReadByte(b) << 16) |
-                (ReadByte(b) << 8) |
-                 ReadByte(b));
+                (ReadByte() << 24) |
+                (ReadByte() << 16) |
+                (ReadByte() << 8) |
+                 ReadByte());
         }
 
-        public unsafe float ReadSingle(byte[] b)
+        public unsafe float ReadSingle()
         {
-            uint value = ReadUInt32(b);
+            uint value = ReadUInt32();
             return *(float*)&value;
         }
 
-        public unsafe double ReadDouble(byte[] b)
+        public unsafe double ReadDouble()
         {
-            ulong value = ReadUInt64(b);
+            ulong value = ReadUInt64();
             return *(double*)&value;
         }
 
@@ -256,10 +265,10 @@ namespace MyvarCraft.Core.Internals
             _buffer.AddRange(BitConverter.GetBytes(value));
         }
 
-        public void WriteString(string data)
+        public void WriteString(string data, bool length = true)
         {
             var buffer = Encoding.UTF8.GetBytes(data);
-          //  if (length)
+            if (length)
             {
                 WriteVarInt(buffer.Length);
             }
