@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyvarCraft.Core.Objects.Meta;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,8 @@ namespace MyvarCraft.Core.Objects
         public Guid OwnerID { get; set; } = Guid.NewGuid();
         public int GameMode { get; set; } = 1;
 
-        public double X { get; set; } = 0;
-        public double Y { get; set; } = 50;
-        public double Z { get; set; } = 0;
-
-        public float Yaw { get; set; } = 0;
-        public float Pitch { get; set; } = 0;
+        public Location Posistion { get; set; }
+        public Look Look { get; set; }
 
         public bool Spawned { get; set; } = true;
     }

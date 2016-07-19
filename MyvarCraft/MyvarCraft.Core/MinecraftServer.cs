@@ -23,6 +23,7 @@ namespace MyvarCraft.Core
             ServiceManager.AddServece(new NetworkService());
             ServiceManager.AddServece(new ServerListService());
             ServiceManager.AddServece(new LoginService());
+            ServiceManager.AddServece(new ChunckProviderService());
 
             ServiceManager.Start();
         }

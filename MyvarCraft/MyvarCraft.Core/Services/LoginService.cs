@@ -71,11 +71,11 @@ namespace MyvarCraft.Core.Services
 
 
                 var ppal = new PlayerPositionAndLook() { Owner = p.Owner };
-                ppal.X = pl.X;
-                ppal.Y = pl.Y;
-                ppal.Z = pl.Z;
-                ppal.Yaw = pl.Yaw;
-                ppal.Pitch = pl.Pitch;
+                ppal.X = pl.Posistion.X;
+                ppal.Y = pl.Posistion.Y;
+                ppal.Z = pl.Posistion.Z;
+                ppal.Yaw = pl.Look.Yaw;
+                ppal.Pitch = pl.Look.Pitch;
                 ppal.Flags = 255;
 
                 NetworkService.EnqueuePacket(ppal);

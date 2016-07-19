@@ -16,12 +16,6 @@ namespace MyvarCraft.Core.Packets
             IDs.Add(-1);
         }
 
-        public override Packet Read(byte[] data)
-        {
-            var re = new Request();
-            MinecraftStream ms = new MinecraftStream(data);
-            re.ID = ms.ReadVarInt();
-            return re;
-        }
+        public override Packet Read(byte[] data) => new Request() { ID = new MinecraftStream(data).ReadVarInt() };
     }
 }

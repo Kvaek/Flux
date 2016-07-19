@@ -20,12 +20,8 @@ namespace MyvarCraft.Core.Packets
 
         public override Packet Read(byte[] data)
         {
-            var re = new LoginStart();
-            MinecraftStream ms = new MinecraftStream(data);
-            re.ID = ms.ReadVarInt();
-            var l = ms.ReadVarInt();
-            re.Name = ms.ReadString(l);
-            return re;
+            var ms = new MinecraftStream(data);
+            return new LoginStart() { ID = ms.ReadVarInt(), Name = ms.ReadString(ms.ReadVarInt()) };
         }
     }
 }

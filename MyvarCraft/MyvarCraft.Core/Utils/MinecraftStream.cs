@@ -14,7 +14,7 @@ namespace MyvarCraft.Core.Utils
         public List<byte> _buffer = new List<byte>();
         public int _offset = 0;
 
-        private byte[] buffer { get; set; }
+        byte[] buffer { get; set; }
 
         public MinecraftStream()
         {
@@ -107,13 +107,7 @@ namespace MyvarCraft.Core.Utils
         }
 
         public void WriteVarInt(int _value)
-        {
-            /*   while ((value & 128) != 0)
-               {
-                   _buffer.Add((byte)(value & 127 | 128));
-                   value = (int)((uint)value) >> 7;
-               }
-               _buffer.Add((byte)value);*/
+        {           
             uint value = (uint)_value;
             while (true)
             {
@@ -128,7 +122,7 @@ namespace MyvarCraft.Core.Utils
 
         }
 
-        public static byte[] ToByteArray(BitArray bits)
+        public byte[] ToByteArray(BitArray bits)
         {
             int numBytes = bits.Count / 8;
             if (bits.Count % 8 != 0) numBytes++;
@@ -152,7 +146,7 @@ namespace MyvarCraft.Core.Utils
             return bytes;
         }
 
-        public static BitArray BitsReverse(BitArray bits)
+        public BitArray BitsReverse(BitArray bits)
         {
             int len = bits.Count;
             BitArray a = new BitArray(bits);
@@ -189,15 +183,14 @@ namespace MyvarCraft.Core.Utils
 
         public ulong ReadUInt64()
         {
-            return unchecked(
-                   ((ulong)ReadByte() << 56) |
+            return unchecked((((ulong)ReadByte() << 56) |
                    ((ulong)ReadByte() << 48) |
                    ((ulong)ReadByte() << 40) |
                    ((ulong)ReadByte() << 32) |
                    ((ulong)ReadByte() << 24) |
                    ((ulong)ReadByte() << 16) |
                    ((ulong)ReadByte() << 8) |
-                    (ulong)ReadByte());
+                    ReadByte()));
         }
 
         public uint ReadUInt32()
@@ -267,18 +260,18 @@ namespace MyvarCraft.Core.Utils
 
         public void WriteString(string data, bool length = true)
         {
-            var buffer = Encoding.UTF8.GetBytes(data);
+            var abuffer = Encoding.UTF8.GetBytes(data);
             if (length)
             {
-                WriteVarInt(buffer.Length);
+                WriteVarInt(abuffer.Length);
             }
-            _buffer.AddRange(buffer);
+            _buffer.AddRange(abuffer);
         }
 
 
         public byte[] Flush(int id = -1)
         {
-            var buffer = _buffer.ToArray();
+            var abuffer = _buffer.ToArray();
             _buffer.Clear();
 
             var add = 0;
@@ -291,13 +284,13 @@ namespace MyvarCraft.Core.Utils
                 _buffer.Clear();
             }
 
-            WriteVarInt(buffer.Length + add);
+            WriteVarInt(abuffer.Length + add);
             var bufferLength = _buffer.ToArray();
             _buffer.Clear();
-            byte[] rv = new byte[bufferLength.Length + packetData.Length + buffer.Length];
-            System.Buffer.BlockCopy(bufferLength, 0, rv, 0, bufferLength.Length);
-            System.Buffer.BlockCopy(packetData, 0, rv, bufferLength.Length, packetData.Length);
-            System.Buffer.BlockCopy(buffer, 0, rv, bufferLength.Length + packetData.Length, buffer.Length);
+            byte[] rv = new byte[bufferLength.Length + packetData.Length + abuffer.Length];
+            Buffer.BlockCopy(bufferLength, 0, rv, 0, bufferLength.Length);
+            Buffer.BlockCopy(packetData, 0, rv, bufferLength.Length, packetData.Length);
+            Buffer.BlockCopy(abuffer, 0, rv, bufferLength.Length + packetData.Length, abuffer.Length);
             return rv;
         }
 

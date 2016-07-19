@@ -9,12 +9,9 @@ namespace MyvarCraft
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            MinecraftServer ms = new MinecraftServer();
-            ms.Start();
-
-            while (true) ;
+            new MinecraftServer().Start();
         }
     }
 }
