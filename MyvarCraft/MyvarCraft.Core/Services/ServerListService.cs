@@ -28,7 +28,7 @@ namespace MyvarCraft.Core.Services
             if (NetworkService.IsAvalible(new Ping()))
             {
                 var p = NetworkService.GetPacket<Ping>() as Ping;
-                NetworkService.EnqueuePacket(new Pong() { Owner = p.Owner, Payload = p.Payload, Send = true });
+                NetworkService.EnqueuePacket(new Pong() { Owner = p.Owner, Payload = p.Payload, Send = true, KillSwitch = true });
             }
 
             if (NetworkService.IsAvalible(new Request()))
@@ -76,5 +76,13 @@ namespace MyvarCraft.Core.Services
     {
         public int max { get; set; } = 100;
         public int online { get; set; } = 0;
+
+        public Players()
+        {
+            foreach(var i in MinecraftServer.Worlds)
+            {
+                online += i.Players.Count();
+            }
+        }
     }
 }

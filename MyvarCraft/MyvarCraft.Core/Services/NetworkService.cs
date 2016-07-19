@@ -100,37 +100,45 @@ namespace MyvarCraft.Core.Services
                 {
                     try
                     {
-                        if (i._ns.DataAvailable)
+                        if (!i._Client.Connected)
                         {
-
-                            byte[] buffer = new byte[4096];
-
-
-                            var value = 0;
-                            var size = 0;
-                            var bsize = 0;
-                            int b;
-                            while (((b = i._ns.ReadByte()) & 0x80) == 0x80)
+                            _cw.Remove(i);
+                            
+                        }
+                        else
+                        {
+                            if (i._ns.DataAvailable)
                             {
-                                bsize++;
-                                value |= (b & 0x7F) << (size++ * 7);
-                                if (size > 5)
+
+                                byte[] buffer = new byte[4096];
+
+
+                                var value = 0;
+                                var size = 0;
+                                var bsize = 0;
+                                int b;
+                                while (((b = i._ns.ReadByte()) & 0x80) == 0x80)
                                 {
-                                    throw new IOException("raise the shields intruder alert!");// imagin Jean-Luc Picard saying that on the bridge of the enterprise
+                                    bsize++;
+                                    value |= (b & 0x7F) << (size++ * 7);
+                                    if (size > 5)
+                                    {
+                                        throw new IOException("raise the shields intruder alert!");// imagin Jean-Luc Picard saying that on the bridge of the enterprise
+                                    }
                                 }
-                            }
-                            var psize = value | ((b & 0x7F) << (size * 7));
+                                var psize = value | ((b & 0x7F) << (size * 7));
 
-                            buffer = new byte[psize - bsize];
+                                buffer = new byte[psize - bsize];
 
-                            int bytesread = i._ns.Read(buffer, 0, buffer.Length);
-                            Array.Resize(ref buffer, bytesread);
-                            var pp = Packet.GetPacket(buffer, i.State);
-                            if (pp != null)
-                            {
-                                pp.Owner = i.OwnerID;
+                                int bytesread = i._ns.Read(buffer, 0, buffer.Length);
+                                Array.Resize(ref buffer, bytesread);
+                                var pp = Packet.GetPacket(buffer, i.State);
+                                if (pp != null)
+                                {
+                                    pp.Owner = i.OwnerID;
 
-                                EnqueuePacket(pp);
+                                    EnqueuePacket(pp);
+                                }
                             }
                         }
                     }
@@ -138,12 +146,18 @@ namespace MyvarCraft.Core.Services
                     {
                         Console.WriteLine(ee);
                         _cw.Remove(i);
+                        LoginService.Disconnected(i.OwnerID);
                     }
 
                     var send = GetPacket(i.OwnerID, true);
                     if (send != null)
                     {
                         i.Send(send);
+                        if(send.KillSwitch)
+                        {
+                            _cw.Remove(i);
+                            LoginService.Disconnected(i.OwnerID);
+                        }
                     }
                 }
             }

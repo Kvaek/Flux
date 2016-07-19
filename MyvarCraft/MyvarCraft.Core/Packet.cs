@@ -15,6 +15,7 @@ namespace MyvarCraft.Core
         public int ID { get; set; }
         public Guid Owner { get; set; }
         public bool Send { get; set; }
+        public bool KillSwitch { get; set; }
 
         public Packet()
         {
@@ -44,7 +45,8 @@ namespace MyvarCraft.Core
         {
             new Ping(),
             new HandShake(),
-            new Request()
+            new Request(),
+            new LoginStart()
         };
 
         public static Packet GetPacket(byte[] raw, int state)
