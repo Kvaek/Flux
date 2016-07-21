@@ -9,6 +9,6 @@ namespace MyvarCraft.Core.Objects
 {
     public interface IWorldGenerator
     {
-        Chunck GetChunck(int x, int y);
+        Chunk GetChunck(int x, int y);
     }
 }

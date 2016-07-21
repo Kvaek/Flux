@@ -6,42 +6,25 @@ using System.Threading.Tasks;
 
 namespace MyvarCraft.Core.Objects.Meta
 {
-    public class Chunck
+    public class Chunk
     {
-        public List<List<Block>> RawData { get; set; } = new List<List<Block>>();
+        public BlockStorage RawData { get; set; } = new BlockStorage();
 
-        public Chunck()
+        public Chunk()
         {
-            for (int i = 0; i < 16; i++)
-            {
-                var arr = new List<Block>(16 * 16);
-                for (int t = 0; t < 16 * 16; t++)
-                {
-                    arr.Add(new Block());
-                }
-                RawData.Add(arr);
-            }
+            
         }
 
-        public void SetBlock(Block b, Location l)
-        {
-            RawData[(int)l.Y][(int)l.X + ((int)l.Z * 16)] = b;
-        }
 
-        public Block GetBlock(Location l)
-        {
-            return RawData[(int)l.Y][(int)l.X + ((int)l.Z * 16)];
-        }
         public Block GetBlock(int x, int y, int z)
         {
-            return RawData[y][x + (z * 16)];
+            var d = RawData.Get(z, y, z);
+            return new Block() { ID =  (d | d >> 1) };
         }
 
-        public byte[] FlushData()
+        public void SetBlock(int x, int y, int z, int id, int damage)
         {
-            var re = new List<byte>();
-
-            return re.ToArray();
+            RawData.Set(z, y, z, 1 << id | damage);
         }
     }
 }

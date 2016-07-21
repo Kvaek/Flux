@@ -48,6 +48,8 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MinecraftServer.cs" />
     <Compile Include="Objects\Block.cs" />
+    <Compile Include="Objects\BlockStorage.cs" />
+    <Compile Include="Objects\FlexibleStorage.cs" />
     <Compile Include="Objects\Meta\Chunck.cs" />
     <Compile Include="Objects\Meta\Enums.cs" />
     <Compile Include="Objects\Meta\Location.cs" />
@@ -75,7 +77,6 @@
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Services\ServerListService.cs" />
-    <Compile Include="Utils\ChunkStream.cs" />
     <Compile Include="Utils\MinecraftStream.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,22 +9,30 @@ namespace MyvarCraft.Core.Objects.WorldGenerators
 {
     public class FlatLand : IWorldGenerator
     {
-        public Chunck GetChunck(int ax, int ay)
+        public Chunk GetChunck(int ax, int ay)
         {
-            var c = new Chunck();
-            int id = 0;
-            for (int y = 0; y < 3; y++)
+            var ch = new Chunk();
+
+            for (int y1 = 0; y1 < 4; y1++)
             {
-                for (int z = 0; z < 16; z++)
+                for (int x1 = 0; x1 < 16; x1++)
                 {
-                    for (int x = 0; x < 16; x++)
+                    for (int z1 = 0; z1 < 16; z1++)
                     {
-                        c.SetBlock(new Block() { ID = 3, Damage = 0 }, new Location() { X = x, Y = y, Z = z });
+                        ch.RawData.Set(x1, y1, z1, 1 << 4 | 0);
                     }
                 }
             }
 
-            return c;
+            for (int x1 = 0; x1 < 16; x1++)
+            {
+                for (int z1 = 0; z1 < 16; z1++)
+                {
+                    ch.RawData.Set(x1, 4, z1, 2 << 4 | 0);
+                }
+            }
+            
+            return ch;
         }
     }
 }

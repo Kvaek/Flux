@@ -16,7 +16,7 @@ namespace MyvarCraft.Core.Packets
         public int Y { get; set; }
         public byte GroundUp { get; set; } = 1;
         public int BitMask { get; set; } = 1;
-        public Chunck Data { get; set; }
+        public Chunk Data { get; set; }
 
         public ChunckData()
         {
@@ -33,25 +33,22 @@ namespace MyvarCraft.Core.Packets
             read.WriteByte(GroundUp);
             read.WriteVarInt(BitMask);
 
-            ChunkStream cs = new ChunkStream();
-            cs.WriteHeader(Data);
-            cs.WriteBlockData(Data);
+           
 
-            var bufc = cs.RawBuffer.ToArray();
+            var bufc = Data.RawData.Write();
 
             read.WriteVarInt(bufc.Length + 256);
-            
-            foreach(var i in bufc)
+
+            foreach (var i in bufc)
             {
                 read.WriteByte(i);
             }
+
             for (int i = 0; i < 256; i++)
             {
                 read.WriteByte(1);
             }
-
             read.WriteVarInt(0);
-
             var buf = read.Flush(ID);
             ns.Write(buf, 0, buf.Length);
         }
