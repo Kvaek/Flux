@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineSharp", "MineSharp.csproj", "{3583365A-42D6-44E9-A8D7-F13BFC225AAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flux", "Flux.csproj", "{3583365A-42D6-44E9-A8D7-F13BFC225AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

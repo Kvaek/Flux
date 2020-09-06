@@ -1,5 +1,5 @@
 ﻿namespace Flux.Network {
-	public class Packet {
+	public abstract class Packet {
 		
 	}
 }

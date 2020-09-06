@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace MineSharp {
-	class Program {
-		static void Main(string[] args) {
-			Console.WriteLine("Hello World!");
+﻿namespace Flux {
+	public class Program {
+		public static void Main(string[] args) {
+			MinecraftServer server = new MinecraftServer();
+			server.Start();
 		}
 	}
 }

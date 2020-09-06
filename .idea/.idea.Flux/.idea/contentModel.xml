@@ -10,6 +10,11 @@
       <e p="Flux.csproj" t="IncludeRecursive" />
       <e p="Flux.sln" t="IncludeFlat" />
       <e p="MinecraftServer.cs" t="Include" />
+      <e p="Network" t="Include">
+        <e p="Client.cs" t="Include" />
+        <e p="Packet.cs" t="Include" />
+        <e p="Packets" t="Include" />
+      </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
           <e p="netcoreapp3.1" t="Include">
@@ -57,6 +62,13 @@
         </e>
       </e>
       <e p="Program.cs" t="Include" />
+      <e p="README.md" t="Include" />
+      <e p="ServiceManager.cs" t="Include" />
+      <e p="Services" t="Include">
+        <e p="ClientManagerService.cs" t="Include" />
+        <e p="ListService.cs" t="Include" />
+        <e p="NetworkService.cs" t="Include" />
+      </e>
     </e>
   </component>
 </project>
