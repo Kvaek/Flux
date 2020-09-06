@@ -14,17 +14,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19d32de2-9139-4a28-8d40-ef98095fa097" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Services/ClientManagerService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Network/MinecraftStream.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Flux/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Flux/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Flux.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Flux.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MineSharp.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MineSharp.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MinecraftServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MinecraftServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Network/ClientManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Network/Client.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Network/Packet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Network/Packet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/ListService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/ListService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Flux/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Flux/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/ClientManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/ClientManagerService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/NetworkService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/NetworkService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,9 +41,10 @@
         <option value="$PROJECT_DIR$/Network/ClientManager.cs" />
         <option value="$PROJECT_DIR$/ServiceManager.cs" />
         <option value="$PROJECT_DIR$/MinecraftServer.cs" />
+        <option value="$PROJECT_DIR$/Network/Client.cs" />
         <option value="$PROJECT_DIR$/Services/ClientManagerService.cs" />
         <option value="$PROJECT_DIR$/Services/NetworkService.cs" />
-        <option value="$PROJECT_DIR$/Network/Client.cs" />
+        <option value="$PROJECT_DIR$/Network/MinecraftStream.cs" />
       </list>
     </option>
   </component>
@@ -101,7 +95,7 @@
       <option name="presentableId" value="Default" />
       <updated>1599337299725</updated>
       <workItem from="1599337300270" duration="8555000" />
-      <workItem from="1599385358170" duration="1774000" />
+      <workItem from="1599385358170" duration="6198000" />
     </task>
     <servers />
   </component>
@@ -223,5 +217,24 @@
       <screen x="0" y="30" width="2560" height="1410" />
     </state>
     <state x="943" y="347" width="672" height="678" key="search.everywhere.popup/0.30.2560.1410/-1440.-474.1440.2560@0.30.2560.1410" timestamp="1599344652582" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Network/MinecraftStream.cs</url>
+          <line>6</line>
+          <properties documentPath="D:\OneDrive\Projects\C#\Flux\Network\MinecraftStream.cs" initialLine="6">
+            <startOffsets>
+              <option value="164" />
+            </startOffsets>
+            <endOffsets>
+              <option value="165" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

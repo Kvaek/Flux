@@ -9,6 +9,8 @@ namespace Flux.Services {
 			Name = "ClientManager";
 		}
 		private static List<Client> _connectedClients = new List<Client>();
+		
+		public static List<Client> ConnectedClients => _connectedClients;
 		public override void Tick() {
 			foreach (Client client in _connectedClients) {
 				
@@ -22,8 +24,6 @@ namespace Flux.Services {
 		public override void Stop() {
 			
 		}
-
-		public static List<Client> ConnectedClients => _connectedClients;
 
 		public static void AddClient(ref Client client) {
 			if (_connectedClients.Contains(client)) return;

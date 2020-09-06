@@ -12,6 +12,7 @@
       <e p="MinecraftServer.cs" t="Include" />
       <e p="Network" t="Include">
         <e p="Client.cs" t="Include" />
+        <e p="MinecraftStream.cs" t="Include" />
         <e p="Packet.cs" t="Include" />
         <e p="Packets" t="Include" />
       </e>
