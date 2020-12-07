@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 
 namespace Flux {
@@ -7,51 +6,42 @@ namespace Flux {
 		public ServiceManager() {
 			ServiceThread = new Thread(Tick);
 		}
-		private Dictionary<string, Service> Services { get; set; } = new Dictionary<string, Service>();
+
+		private Dictionary<string, Service> Services { get; } = new Dictionary<string, Service>();
 
 		private Thread ServiceThread { get; }
-		private object _locker { get; } = new object();
 
 		public void Init() {
-			lock (_locker) {
-				Services.Clear();
-			}
+			Services.Clear();
 		}
 
-		public Service GetService(string name) {
-			return Services[name];
-		}
+		public Service GetService(string name) => Services[name];
 
 		public void Start() {
-			foreach (KeyValuePair<string, Service> i in Services)
-				lock (_locker) {
-					i.Value.Start();
-				}
+			foreach (KeyValuePair<string, Service> i in Services) {
+				i.Value.Start();
+			}
 
 			ServiceThread.Start();
 		}
 
 		public void Stop() {
 			ServiceThread.Abort();
-			foreach (KeyValuePair<string, Service> i in Services)
-				lock (_locker) {
-					i.Value.Stop();
-				}
+			foreach (KeyValuePair<string, Service> i in Services) {
+				i.Value.Stop();
+			}
 		}
 
 		public void AddService(Service s) {
-			lock (_locker) {
-				Services.Add(s.Name, s);
-			}
+			Services.Add(s.Name, s);
 		}
 
 		private void Tick() {
 			while (true) {
 				foreach (KeyValuePair<string, Service> i in Services) {
-					lock (_locker) {
-						i.Value.Tick();
-					}
+					i.Value.Tick();
 				}
+
 				Thread.Sleep(50);
 			}
 		}
