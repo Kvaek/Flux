@@ -1,0 +1,16 @@
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\Flux.exe.config
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\Flux.exe
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\Flux.pdb
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\Flux.Core.dll
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\Flux.Core.pdb
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\obj\Debug\Flux.csprojAssemblyReference.cache
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\obj\Debug\Flux.csproj.CoreCompileInputs.cache
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\obj\Debug\Flux.csproj.CopyComplete
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\obj\Debug\Flux.exe
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\obj\Debug\Flux.pdb
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\Utf8Json.dll
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\System.ValueTuple.dll
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\Utf8Json.xml
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\Flux\bin\Debug\System.ValueTuple.xml

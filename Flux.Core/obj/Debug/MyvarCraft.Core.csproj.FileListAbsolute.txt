@@ -1,0 +1,9 @@
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\bin\Debug\MyvarCraft.Core.dll
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\bin\Debug\MyvarCraft.Core.pdb
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\obj\Debug\MyvarCraft.Core.csprojAssemblyReference.cache
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\obj\Debug\MyvarCraft.Core.csproj.CoreCompileInputs.cache
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\obj\Debug\MyvarCraft.Core.csproj.CopyComplete
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\obj\Debug\MyvarCraft.Core.dll
+C:\Users\Jonas\OneDrive\Projects\C#\MyvarCraft\MyvarCraft\MyvarCraft.Core\obj\Debug\MyvarCraft.Core.pdb
