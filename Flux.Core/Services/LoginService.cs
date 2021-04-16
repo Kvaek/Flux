@@ -39,7 +39,7 @@ namespace Flux.Core.Services {
 				}
 			}
 
-			if (NetworkService.IsAvalible(new LoginStart())) {
+			if (NetworkService.IsAvailable(new LoginStart())) {
 				LoginStart p = NetworkService.GetPacket<LoginStart>() as LoginStart;
 				Player pl = new Player() { OwnerID = p.Owner, Name = p.Name };
 

@@ -19,8 +19,9 @@ namespace Flux.Core {
 		public static T GetService<T>(string Name) => (T) ServiceIndex[Name];
 
 		public static void Start() {
-			foreach (KeyValuePair<string, IService> i in ServiceIndex)
+			foreach (KeyValuePair<string, IService> i in ServiceIndex) {
 				lock (_Locker) { i.Value.Start(); }
+			}
 
 			TickThread.Start();
 		}
@@ -31,7 +32,7 @@ namespace Flux.Core {
 				lock (_Locker) { i.Value.Stop(); }
 		}
 
-		public static void AddServece(IService s) {
+		public static void AddService(IService s) {
 			lock (_Locker) { ServiceIndex.Add(s.Name, s); }
 		}
 
@@ -40,12 +41,32 @@ namespace Flux.Core {
 		}
 
 		private static void Tick() {
-			while (true) {
-				foreach (KeyValuePair<string, IService> i in ServiceIndex)
-					lock (_Locker) { i.Value.Tick(); }
+			double ns = 1000000000.0 / 20.0;
+			double delta = 0;
 
-				Thread.Sleep(25); // please dont melt my cpu
+			long lastTime = DateTime.Now.Ticks * 100;
+
+			while (true) {
+				long now = DateTime.Now.Ticks * 100;
+				delta += (now - lastTime) / ns;
+				lastTime = now;
+
+				while (delta >= 1) {
+					foreach (KeyValuePair<string, IService> i in ServiceIndex) {
+						//lock (_Locker) { i.Value.Tick(); }
+						i.Value.Tick();
+					}
+					delta--;
+				}
 			}
+			/*
+			while (true) {
+				foreach (KeyValuePair<string, IService> i in ServiceIndex) {
+					lock (_Locker) { i.Value.Tick(); }
+				}
+				Thread.Sleep(50);
+			}
+			*/
 		}
 	}
 

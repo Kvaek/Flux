@@ -18,7 +18,7 @@ namespace Flux.Core.Services {
 		public void Stop() { }
 
 		public void Tick() {
-			if (NetworkService.IsAvalible(new Ping())) {
+			if (NetworkService.IsAvailable(new Ping())) {
 				Ping p = NetworkService.GetPacket<Ping>() as Ping;
 				NetworkService.EnqueuePacket(new Pong {
 					Owner = p.Owner, 
@@ -28,7 +28,7 @@ namespace Flux.Core.Services {
 				});
 			}
 
-			if (NetworkService.IsAvalible(new Request())) {
+			if (NetworkService.IsAvailable(new Request())) {
 				Request p = NetworkService.GetPacket<Request>() as Request;
 				Response resp = new Response {
 					Owner = p.Owner, 
@@ -37,7 +37,7 @@ namespace Flux.Core.Services {
 				NetworkService.EnqueuePacket(resp);
 			}
 
-			if (NetworkService.IsAvalible(new HandShake())) {
+			if (NetworkService.IsAvailable(new HandShake())) {
 				HandShake p = NetworkService.GetPacket<HandShake>() as HandShake;
 				foreach (ConnectionWrapper i in NetworkService._cw)
 					if (i.OwnerID == p.Owner) {

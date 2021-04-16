@@ -14,10 +14,10 @@ namespace Flux.Core {
 			ServiceManager.Reset();
 
 			//register all our serveces
-			ServiceManager.AddServece(new NetworkService());
-			ServiceManager.AddServece(new ServerListService());
-			ServiceManager.AddServece(new LoginService());
-			ServiceManager.AddServece(new ChunckProviderService());
+			ServiceManager.AddService(new NetworkService());
+			ServiceManager.AddService(new ServerListService());
+			ServiceManager.AddService(new LoginService());
+			ServiceManager.AddService(new ChunckProviderService());
 
 			ServiceManager.Start();
 		}

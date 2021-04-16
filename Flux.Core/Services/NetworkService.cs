@@ -25,12 +25,7 @@ namespace Flux.Core.Services {
 
 		public static Packet GetPacket<T>() where T : new() {
 			lock (_Locker) {
-				Packet re = null;
-				foreach (Packet i in Packets)
-					if (i.GetType() == new T().GetType()) {
-						re = i;
-						break;
-					}
+				Packet re = Packets.FirstOrDefault(i => i.GetType() == new T().GetType());
 
 				if (re != null) {
 					Packets.Remove(re);
@@ -43,12 +38,7 @@ namespace Flux.Core.Services {
 
 		public static Packet GetPacket(Guid g, bool send = false) {
 			lock (_Locker) {
-				Packet re = null;
-				foreach (Packet i in Packets)
-					if (i.Owner == g && i.Send == send) {
-						re = i;
-						break;
-					}
+				Packet re = Packets.FirstOrDefault(i => i.Owner == g && i.Send == send);
 
 				if (re != null) {
 					Packets.Remove(re);
@@ -59,27 +49,46 @@ namespace Flux.Core.Services {
 			}
 		}
 
-		public static bool IsAvalible(Packet p) {
-			lock (_Locker) {
-				foreach (Packet i in Packets)
-					if (i.GetType() == p.GetType())
-						return true;
-
-				return false;
-			}
+		public static bool IsAvailable(Packet p) {
+			lock (_Locker) { return Packets.Any(i => i.GetType() == p.GetType()); }
 		}
 
-		public void Tick() {
+		public void Tick() {/*
+			new Thread(() => {
+				Thread.CurrentThread.IsBackground = true; 
+				lock (_Locker) {
+					foreach (ConnectionWrapper i in _cw.ToArray())
+						try {
+							TickNetwork(i);
+							SendPackets(i);
+						} catch (Exception) { _cw.Remove(i); }
+				}
+			}).Start();*/
 			lock (_Locker) {
 				foreach (ConnectionWrapper i in _cw.ToArray())
 					try {
 						TickNetwork(i);
 						SendPackets(i);
-					} catch (Exception ee) { _cw.Remove(i); }
+					} catch (Exception) { _cw.Remove(i); }
 			}
 		}
 
 		public void SendPackets(ConnectionWrapper i) {
+			
+			new Thread(() => {
+				Thread.CurrentThread.IsBackground = true; 
+				while (true) {
+					Packet send = GetPacket(i.OwnerID, true);
+					if (send != null) {
+						i.Send(send);
+						if (send.KillSwitch) {
+							_cw.Remove(i);
+							LoginService.Disconnected(i.OwnerID);
+						}
+					} else { break; }
+				}
+			}).Start();
+			/*
 			while (true) {
 				Packet send = GetPacket(i.OwnerID, true);
 				if (send != null) {
@@ -90,6 +99,7 @@ namespace Flux.Core.Services {
 					}
 				} else { break; }
 			}
+			*/
 		}
 
 		public int ReadVarInt(NetworkStream ns) {
@@ -98,10 +108,7 @@ namespace Flux.Core.Services {
 			int b;
 			while (((b = ns.ReadByte()) & 0x80) == 0x80) {
 				value |= (b & 0x7F) << (size++ * 7);
-				if (size > 5)
-					throw
-						new IOException(
-							"raise the shields intruder alert!"); // imagin Jean-Luc Picard saying that on the bridge of the enterprise
+				if (size > 5) throw new IOException("raise the shields intruder alert!");
 			}
 
 			return value | ((b & 0x7F) << (size * 7));
@@ -109,29 +116,30 @@ namespace Flux.Core.Services {
 
 		public void TickNetwork(ConnectionWrapper i) {
 			try {
-				if (!i._Client.Connected) { _cw.Remove(i); } else {
-					if (i._ns.DataAvailable) {
-						byte[] buffer = new byte[ReadVarInt(i._ns)];
+				if (!i._Client.Connected) {
+					_cw.Remove(i);
+				} else {
+					if (!i._ns.DataAvailable) return;
+					byte[] buffer = new byte[ReadVarInt(i._ns)];
 
-						int bytesread = i._ns.Read(buffer, 0, buffer.Length);
-						Array.Resize(ref buffer, bytesread); //resize just to be on the safe side
-						Packet pp = null;
+					int bytesread = i._ns.Read(buffer, 0, buffer.Length);
+					Array.Resize(ref buffer, bytesread); //resize just to be on the safe side
+					Packet pp = null;
 
-						if (i.LoggedIn) {
-							MinecraftStream ms = new MinecraftStream(buffer);
-							int id = ms.ReadVarInt();
-							if (id == 0) { } else { pp = Packet.GetPacket(buffer, i.State); }
-						} else { pp = Packet.GetPacket(buffer, i.State); }
+					if (i.LoggedIn) {
+						MinecraftStream ms = new MinecraftStream(buffer);
+						int id = ms.ReadVarInt();
+						if (id == 0) { } else { pp = Packet.GetPacket(buffer, i.State); }
+					} else { pp = Packet.GetPacket(buffer, i.State); }
 
 
-						if (i.LoggedIn) { }
+					if (i.LoggedIn) { }
 
-						if (pp is LoginStart) i.LoggedIn = true;
+					if (pp is LoginStart) i.LoggedIn = true;
 
-						if (pp != null) {
-							pp.Owner = i.OwnerID;
-							EnqueuePacket(pp);
-						}
+					if (pp != null) {
+						pp.Owner = i.OwnerID;
+						EnqueuePacket(pp);
 					}
 				}
 			} catch (Exception ee) {
