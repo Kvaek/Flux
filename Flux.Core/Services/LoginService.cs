@@ -30,14 +30,12 @@ namespace Flux.Core.Services {
 
 		public void Tick() {
 			lock (MinecraftServer.Worlds) {
-				foreach (World i in MinecraftServer.Worlds)
-				foreach (Player p in i.Players) {
-					KeepAlive ka = new KeepAlive() { Owner = p.OwnerID };
-					ka.KeepAliveID = new Random().Next();
-
-					NetworkService.EnqueuePacket(ka);
+				foreach (World i in MinecraftServer.Worlds) {
+					foreach (Player p in i.Players) {
+						KeepAlive ka = new KeepAlive { Owner = p.OwnerID, KeepAliveID = new Random().Next() };
+						NetworkService.EnqueuePacket(ka);
+					}
 				}
-			}
 
 			if (NetworkService.IsAvailable(new LoginStart())) {
 				LoginStart p = NetworkService.GetPacket<LoginStart>() as LoginStart;
@@ -75,6 +73,7 @@ namespace Flux.Core.Services {
 				pl.Spawned = true;
 
 				MinecraftServer.Worlds[0].Players.Add(pl);
+			}
 			}
 		}
 

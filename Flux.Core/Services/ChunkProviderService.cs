@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Flux.Core.Objects;
 
 namespace Flux.Core.Services {
-	public class ChunckProviderService : IService {
-		public string Name { get; set; } = "ChunckProviderService";
+	public class ChunkProviderService : IService {
+		public string Name { get; set; } = "ChunkProviderService";
 
 		public void Start() { }
 
@@ -18,13 +18,12 @@ namespace Flux.Core.Services {
 			lock (MinecraftServer.Worlds) {
 				foreach (World i in MinecraftServer.Worlds)
 				foreach (Player p in i.Players)
-					if (p.Spawned && !p.SpawnedCunckLoaded) {
-						ChunkData cd = new ChunkData() { Owner = p.OwnerID };
-						cd.Data = i.WorldGenerator.GetChunk(0, 0);
+					if (p.Spawned && !p.ChunkLoaded) {
+						ChunkData cd = new ChunkData { Owner = p.OwnerID, Data = i.WorldGenerator.GetChunk(0, 0) };
 
 						NetworkService.EnqueuePacket(cd);
 
-						p.SpawnedCunckLoaded = true;
+						p.ChunkLoaded = true;
 					}
 			}
 		}

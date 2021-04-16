@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Flux.Core.Utils {
 		public int _offset = 0;
 
 		private byte[] buffer { get; set; }
+		
+		public NetworkStream Ns { get; set; }
 
 		public MinecraftStream() { }
 
@@ -230,12 +233,12 @@ namespace Flux.Core.Utils {
 		}
 
 
-		public byte[] Flush(int id = -1) {
+		public void Flush(int id = -1) {
 			byte[] abuffer = _buffer.ToArray();
 			_buffer.Clear();
 
 			int add = 0;
-			byte[] packetData = new[] { (byte) 0x00 };
+			byte[] packetData = { 0x00 };
 			if (id >= 0) {
 				WriteVarInt(id);
 				packetData = _buffer.ToArray();
@@ -250,7 +253,7 @@ namespace Flux.Core.Utils {
 			Buffer.BlockCopy(bufferLength, 0, rv, 0, bufferLength.Length);
 			Buffer.BlockCopy(packetData, 0, rv, bufferLength.Length, packetData.Length);
 			Buffer.BlockCopy(abuffer, 0, rv, bufferLength.Length + packetData.Length, abuffer.Length);
-			return rv;
+			Ns.Write(rv, 0, rv.Length);
 		}
 	}
 }

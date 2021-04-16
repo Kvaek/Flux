@@ -41,18 +41,16 @@ namespace Flux.Core.Packets {
 			return re;
 		}
 
-		public override void Flush(NetworkStream ns) {
-			MinecraftStream read = new MinecraftStream();
-			read.WriteDouble(X);
-			read.WriteDouble(Y);
-			read.WriteDouble(Z);
-			read.WriteFloat(Yaw);
-			read.WriteFloat(Pitch);
-			read.WriteByte(Flags);
-			read.WriteVarInt(TeleportID);
+		public override void Write(MinecraftStream ms) {
+			ms.WriteDouble(X);
+			ms.WriteDouble(Y);
+			ms.WriteDouble(Z);
+			ms.WriteFloat(Yaw);
+			ms.WriteFloat(Pitch);
+			ms.WriteByte(Flags);
+			ms.WriteVarInt(TeleportID);
 
-			byte[] buf = read.Flush(ID);
-			ns.Write(buf, 0, buf.Length);
+			ms.Flush(ID);
 		}
 	}
 }

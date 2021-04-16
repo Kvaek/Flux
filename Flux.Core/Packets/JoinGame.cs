@@ -21,20 +21,17 @@ namespace Flux.Core.Packets {
 			Send = true;
 		}
 
-		public override void Flush(NetworkStream ns) {
-			MinecraftStream read = new MinecraftStream();
+		public override void Write(MinecraftStream ms) {
 
-			read.WriteInt(EntityID);
-			read.WriteByte(Gamemode);
-			read.WriteInt(Dimension);
-			read.WriteByte(Difficulty);
-			read.WriteByte(MaxPlayers);
-			read.WriteString(LevelType);
-			read.WriteSByte(ReducedDebugInfo);
+			ms.WriteInt(EntityID);
+			ms.WriteByte(Gamemode);
+			ms.WriteInt(Dimension);
+			ms.WriteByte(Difficulty);
+			ms.WriteByte(MaxPlayers);
+			ms.WriteString(LevelType);
+			ms.WriteSByte(ReducedDebugInfo);
 
-
-			byte[] buf = read.Flush(ID);
-			ns.Write(buf, 0, buf.Length);
+			ms.Flush(ID);
 		}
 	}
 }

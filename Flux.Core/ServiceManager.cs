@@ -41,7 +41,7 @@ namespace Flux.Core {
 		}
 
 		private static void Tick() {
-			double ns = 1000000000.0 / 20.0;
+			const double ns = 1000000000.0 / 20.0;
 			double delta = 0;
 
 			long lastTime = DateTime.Now.Ticks * 100;
@@ -53,8 +53,8 @@ namespace Flux.Core {
 
 				while (delta >= 1) {
 					foreach (KeyValuePair<string, IService> i in ServiceIndex) {
-						//lock (_Locker) { i.Value.Tick(); }
-						i.Value.Tick();
+						lock (_Locker) { i.Value.Tick(); }
+						//i.Value.Tick();
 					}
 					delta--;
 				}

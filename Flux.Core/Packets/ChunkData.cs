@@ -20,25 +20,24 @@ namespace Flux.Core.Packets {
 			Send = true;
 		}
 
-		public override void Flush(NetworkStream ns) {
-			MinecraftStream read = new MinecraftStream();
+		public override void Write(MinecraftStream ms) {
 
-			read.WriteInt(X);
-			read.WriteInt(Y);
-			read.WriteByte(GroundUp);
-			read.WriteVarInt(BitMask);
+			ms.WriteInt(X);
+			ms.WriteInt(Y);
+			ms.WriteByte(GroundUp);
+			ms.WriteVarInt(BitMask);
 
 
 			byte[] bufc = Data.RawData.Write();
 
-			read.WriteVarInt(bufc.Length + 256);
+			ms.WriteVarInt(bufc.Length + 256);
 
-			foreach (byte i in bufc) read.WriteByte(i);
+			foreach (byte i in bufc) ms.WriteByte(i);
 
-			for (int i = 0; i < 256; i++) read.WriteByte(1);
-			read.WriteVarInt(0);
-			byte[] buf = read.Flush(ID);
-			ns.Write(buf, 0, buf.Length);
+			for (int i = 0; i < 256; i++) ms.WriteByte(1);
+			ms.WriteVarInt(0);
+			
+			ms.Flush(ID);
 		}
 	}
 }

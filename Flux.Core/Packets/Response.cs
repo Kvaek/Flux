@@ -15,11 +15,10 @@ namespace Flux.Core.Packets {
 			Send = true;
 		}
 
-		public override void Flush(NetworkStream ns) {
-			MinecraftStream read = new MinecraftStream();
-			read.WriteString(Json);
-			byte[] buf = read.Flush(ID);
-			ns.Write(buf, 0, buf.Length);
+		public override void Write(MinecraftStream ms) {
+			ms.WriteString(Json);
+			
+			ms.Flush(ID);
 		}
 	}
 }

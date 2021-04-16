@@ -8,7 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Flux.Core {
-	public class Packet {
+	public class Packet {/*
+		public static List<Packet> Packets = typeof(Packet)
+			.Assembly.GetTypes()
+			.Where(c => c.IsSubclassOf(typeof(Packet)) && !c.IsAbstract)
+			.Select(c => (Packet) Activator.CreateInstance(c))
+			.ToList();
+			*/
 		public List<int> IDs { get; set; } = new List<int>();
 		public int ID { get; set; }
 		public Guid Owner { get; set; }
@@ -21,8 +27,9 @@ namespace Flux.Core {
 			Read(data);
 		}
 
-		public virtual void Flush(NetworkStream ns) {
-			ns.Write(new byte[] { 0 }, 0, 1);
+		public virtual void Write(MinecraftStream ms) {
+			//ms.Flush();
+			ms.Ns.Write(new byte[] { 0 }, 0, 1);
 		}
 
 		public virtual Packet Read(byte[] data) {
@@ -34,7 +41,7 @@ namespace Flux.Core {
 
 
 		private static List<Packet> _packets { get; set; } =
-			new List<Packet>() { new Ping(), new HandShake(), new Request(), new LoginStart() };
+			new List<Packet> { new Ping(), new HandShake(), new Request(), new LoginStart() };
 
 		public static Packet GetPacket(byte[] raw, int state) {
 			MinecraftStream ms = new MinecraftStream(raw);

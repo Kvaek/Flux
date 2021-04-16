@@ -16,11 +16,9 @@ namespace Flux.Core.Packets {
 		}
 
 
-		public override void Flush(NetworkStream ns) {
-			MinecraftStream read = new MinecraftStream();
-			read.WriteLong(KeepAliveID);
-			byte[] buf = read.Flush(ID);
-			ns.Write(buf, 0, buf.Length);
+		public override void Write(MinecraftStream ms) {
+			ms.WriteLong(KeepAliveID);
+			ms.Flush(ID);
 		}
 	}
 }

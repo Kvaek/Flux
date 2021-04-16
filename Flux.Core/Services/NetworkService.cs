@@ -53,7 +53,7 @@ namespace Flux.Core.Services {
 			lock (_Locker) { return Packets.Any(i => i.GetType() == p.GetType()); }
 		}
 
-		public void Tick() {/*
+		public void Tick() {
 			new Thread(() => {
 				Thread.CurrentThread.IsBackground = true; 
 				lock (_Locker) {
@@ -63,7 +63,8 @@ namespace Flux.Core.Services {
 							SendPackets(i);
 						} catch (Exception) { _cw.Remove(i); }
 				}
-			}).Start();*/
+			}).Start();
+			/*
 			lock (_Locker) {
 				foreach (ConnectionWrapper i in _cw.ToArray())
 					try {
@@ -71,10 +72,11 @@ namespace Flux.Core.Services {
 						SendPackets(i);
 					} catch (Exception) { _cw.Remove(i); }
 			}
+			*/
 		}
 
 		public void SendPackets(ConnectionWrapper i) {
-			
+			/*
 			new Thread(() => {
 				Thread.CurrentThread.IsBackground = true; 
 				while (true) {
@@ -87,9 +89,9 @@ namespace Flux.Core.Services {
 						}
 					} else { break; }
 				}
-			}).Start();
-			/*
-			while (true) {
+			}).Start();*/
+			
+			//while (true) {
 				Packet send = GetPacket(i.OwnerID, true);
 				if (send != null) {
 					i.Send(send);
@@ -97,9 +99,9 @@ namespace Flux.Core.Services {
 						_cw.Remove(i);
 						LoginService.Disconnected(i.OwnerID);
 					}
-				} else { break; }
-			}
-			*/
+				} //else { break; }
+			//}
+			
 		}
 
 		public int ReadVarInt(NetworkStream ns) {
@@ -152,10 +154,11 @@ namespace Flux.Core.Services {
 		public void Start() {
 			Run = true;
 
-			ThreadPool.QueueUserWorkItem((c) => {
+			ThreadPool.QueueUserWorkItem(c => {
 				TcpListener tl = new TcpListener(IPAddress.Any, 25565);
 				tl.Start();
 
+				//Accepting based on tickrate?
 				while (Run) {
 					ConnectionWrapper cq = new ConnectionWrapper(tl.AcceptTcpClient());
 					lock (_Locker) { _cw.Add(cq); }
@@ -171,6 +174,7 @@ namespace Flux.Core.Services {
 	public class ConnectionWrapper {
 		public TcpClient _Client { get; set; }
 		public NetworkStream _ns { get; set; }
+		public MinecraftStream _ms { get; set; }
 		public Guid OwnerID { get; set; } = Guid.NewGuid();
 		public int State { get; set; } = 0;
 		public bool LoggedIn { get; set; } = false;
@@ -178,10 +182,11 @@ namespace Flux.Core.Services {
 		public ConnectionWrapper(TcpClient c) {
 			_Client = c;
 			_ns = _Client.GetStream();
+			_ms = new MinecraftStream { Ns = _ns };
 		}
 
 		public void Send(Packet p) {
-			p.Flush(_ns);
+			p.Write(_ms);
 		}
 	}
 }

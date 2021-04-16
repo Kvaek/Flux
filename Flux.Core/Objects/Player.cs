@@ -15,6 +15,6 @@ namespace Flux.Core.Objects {
 		public Look Look { get; set; } = new Look();
 
 		public bool Spawned { get; set; } = false;
-		public bool SpawnedCunckLoaded { get; set; } = false;
+		public bool ChunkLoaded { get; set; } = false;
 	}
 }
