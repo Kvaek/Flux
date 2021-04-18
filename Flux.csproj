@@ -1,13 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <OutputType>Exe</OutputType>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+      <PackageReference Include="Utf8Json" Version="1.3.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="packages\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="packages\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="packages\**" />
+    </ItemGroup>
 </Project>
